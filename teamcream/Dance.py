@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 from std_srvs.srv import SetBool
 from mavros_msgs.msg import OverrideRCIn, ManualControl
-
+# hi
 class Dance(Node):
     def __init__(self):
         super().__init__('arm_client')
