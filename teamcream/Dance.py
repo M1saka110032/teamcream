@@ -172,7 +172,7 @@ class Dance(Node):
 
         move_index = 0
         publish_count = 0
-        max_publishes = int(self.moves[0][5] * 10)  # 初始 t * 10
+        max_publishes = int(self.moves[0][5] * 10)  # initial t * 10
         self.timer = self.create_timer(0.1, timer_callback)  # 10 Hz = 0.1 秒
 
 def main():

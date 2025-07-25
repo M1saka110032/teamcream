@@ -21,6 +21,14 @@ setup(
     entry_points={
         'console_scripts': [
             "Dance = teamcream.Dance:main",
+            "bluerov2_sensors = tutorial_ardusub.bluerov2_sensors:main",
+            "ArmClient = tutorial_ardusub.ArmClient:main",
+            "forward_move = tutorial_ardusub.forward_move:main",
+            "Dance = tutorial_ardusub.Dance:main",
+            "depthhold = tutorial_ardusub.depthhold:main",
+            "headingcontrol = tutorial_ardusub.headingcontrol:main",
+            "calcdepth = tutorial_ardusub.calcdepth:main",
+            "controlMsgPub = tutorial_ardusub.controlMsgPub:main",
         ],
     },
 )
