@@ -4,9 +4,9 @@ from rclpy.node import Node    # the ROS 2 Node class
 from std_msgs.msg import Float64
 import numpy as np
 
-class DepthControl(Node):
+class LaneFollowY(Node):
     def __init__(self):
-        super().__init__("depth_control")    # names the node when running
+        super().__init__("lane_following_y")    # names the node when running
 
         self.kp = 50
         self.ki = 0.5
@@ -65,7 +65,7 @@ class DepthControl(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = DepthControl()
+    node = LaneFollowY()
 
     try:
         rclpy.spin(node)

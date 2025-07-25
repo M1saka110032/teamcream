@@ -1,0 +1,52 @@
+launch:
+  - node:
+      pkg: "rosmav"
+      exec: "bluerov2_hardware_interface"
+      name: "bluerov2_hardware_interface"
+      namespace: ""
+
+  - node:
+      pkg: "rosmav"
+      exec: "bluerov2_camera_interface"
+      name: "bluerov2_camera_interface"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "ArmClient"
+      name: "arm_client"
+      namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "calcdepth"
+      name: "depth_publisher"
+      namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "depthhold"
+      name: "depth_control"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "imagedection"
+      name: "image_detection"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "LaneFollowingR"
+      name: "lane_following_r"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "LaneFollowingY"
+      name: "lane_following_y"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "LaneFollowingOutput"
+      name: "lane_following_output"
+      namespace: ""
