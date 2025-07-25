@@ -6,6 +6,7 @@ from lane_detection import cut_top_half, detect_lines, draw_lines, detect_lanes,
 import numpy as np
 import cv2
 import os
+from std_msgs.msg import Float64,Int16
 
 class ImageDetection(Node):
     def __init__(self):
@@ -20,6 +21,11 @@ class ImageDetection(Node):
             10
         )
 
+        self.y_pub = self.create_publisher(Float64, "/lane_error_y", 10)
+
+        self.r_pub = self.create_publisher(Int16, "/lane_error_r", 10)
+
+
         self.save_dir = "saved_images"
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
@@ -33,12 +39,29 @@ class ImageDetection(Node):
             self.get_logger().debug(f"Received image with frame_id: {msg.header.frame_id}")
 
             img = cut_top_half(cv_image)
+            
 
             filtered_lines, edges = detect_lines(img, 20, 60, 3,250,100)
 
             lanes = detect_lanes(img, filtered_lines)
 
             mid_intercept, mid_slope, mid_angle = get_lane_center(lanes, img)
+            height, width, channels = img.shape
+
+            if mid_slope >= 0:
+                mid_angle = -mid_angle
+
+            r_error = int(round(mid_angle))
+            y_error = mid_intercept - width/2
+            y_error = y_error/10**5
+
+            r = Int16()
+            r.data = r_error
+            y = Float64()
+            y.data = y_error
+            
+            self.r_pub.publish(r)
+            self.y_pub.publish(y)
 
             direction = recommend_direction(mid_intercept, mid_slope, mid_angle, img)
             turn = recommend_turn(mid_intercept, mid_slope, mid_angle, img)

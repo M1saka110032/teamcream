@@ -30,6 +30,9 @@ setup(
             "calcdepth = teamcream.calcdepth:main",
             "controlMsgPub = teamcream.controlMsgPub:main",
             "imagedection = teamcream.imagedection:main",
+            "lane_following_r = teamcream.lane_following_r:main",
+            "lane_following_y = teamcream.lane_following_y:main",
+            "LaneFollowingOutput = teamcream.LaneFollowingOutpu:main",
         ],
     },
 )
