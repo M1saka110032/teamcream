@@ -8,6 +8,7 @@ import cv2
 import os
 from std_msgs.msg import Float64,Int16
 
+
 class ImageDetection(Node):
     def __init__(self):
         super().__init__("image_detection")
