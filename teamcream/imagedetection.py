@@ -45,7 +45,11 @@ class ImageDetection(Node):
             img = cut_top_half(cv_image)
             
 
-            filtered_lines, edges = detect_lines(img, 20, 60, 3,250,100)
+            filtered_lines, edges = detect_lines(img, 20, 60, 3,150,25)
+
+
+            lines_img = draw_lines(cv_image,filtered_lines)
+
 
             lanes = detect_lanes(img, filtered_lines)
 
@@ -74,13 +78,15 @@ class ImageDetection(Node):
             img_with_lines = draw_lanes(img, lanes)
 
             frame_id = msg.header.frame_id
-            original_path = os.path.join(self.save_dir, f"original_{frame_id}.jpg")
-            edges_path = os.path.join(self.save_dir, f"edges_{frame_id}.jpg")
-            lanes_path = os.path.join(self.save_dir, f"lanes_{frame_id}.jpg")
+            original_path = os.path.join(self.save_dir, f"{frame_id}_original.jpg")
+            edges_path = os.path.join(self.save_dir, f"{frame_id}_edges.jpg")
+            lines_path = os.path.join(self.save_dir, f"{frame_id}_lines.jpg")
+            #lanes_path = os.path.join(self.save_dir, f"lanes_{frame_id}.jpg")
 
             cv2.imwrite(original_path, cv_image)
             cv2.imwrite(edges_path, edges)
-            cv2.imwrite(lanes_path, img_with_lines)
+            cv2.imwrite(lines_path, lines_img)
+            #cv2.imwrite(lanes_path, img_with_lines)
 
 
         except Exception as e:

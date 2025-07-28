@@ -219,10 +219,10 @@ def detect_lanes(img, lines):
     if lines is None or len(lines) < 2:
         return []
 
-    angle_threshold = 20
-    max_position_threshold = 500
-    min_position_threshold = 100  # 提高阈值
-    min_intercept_diff = 200  # 新增：最小截距差
+    angle_threshold = 5
+    max_position_threshold = 100
+    min_position_threshold = 10  # 提高阈值
+    min_intercept_diff = 5  # 新增：最小截距差
 
     slopes, angles, intercepts, y_intercepts = get_slopes_intercepts(img, lines)
     line_data = [(line, slope, angle, intercept, y_intercepts)

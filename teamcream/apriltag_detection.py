@@ -99,7 +99,7 @@ class AprilTagDetection(Node):
         self.pub.publish(pose_array_msg)
 
         timestamp = self.get_clock().now().to_msg()
-        filename = f"tag_detected_{timestamp.sec}.png"
+        filename = f"tag_{timestamp.sec}.jpg"
         save_path = os.path.join(self.save_dir, filename)
         cv2.imwrite(save_path, cv_image)
 
