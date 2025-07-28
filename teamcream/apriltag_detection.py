@@ -2,11 +2,8 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
-from lane_detection import cut_top_half, detect_lines, draw_lines, detect_lanes, draw_lanes, get_lane_center, recommend_direction, recommend_turn
+from geometry_msgs.msg import Pose, PoseArray
 import numpy as np
-import cv2
-import os
-from std_msgs.msg import Float64,Int16
 from dt_apriltags import Detector
 
 class AprilTagDetection(Node):
@@ -18,13 +15,11 @@ class AprilTagDetection(Node):
         self.sub = self.create_subscription(
             Image,
             "bluerov2/camera",
-            self.getLane,
+            self.DetectAprilTags,
             10
         )
 
-        self.save_dir = "saved_images"
-        if not os.path.exists(self.save_dir):
-            os.makedirs(self.save_dir)
+        self.pub = self.create_publisher(PoseArray, "/tags", 10)
 
         self.detector = Detector(families='tag36h11',
                                  nthreads=1,
@@ -36,7 +31,7 @@ class AprilTagDetection(Node):
         
         self.get_logger().info(f"Initialized subscriber node. Images will be saved to {self.save_dir}")
 
-    def getLane(self, msg):
+    def DetectAprilTags(self, msg):
         try:
 
             cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
@@ -44,24 +39,46 @@ class AprilTagDetection(Node):
             self.get_logger().error(f"Error processing or saving image: {str(e)}")
         
         height, width, channels = cv_image.shape
-
+        
         tags = self.detector.detect(cv_image,
                                      estimate_tag_pose=True,
                                      camera_params=(width,height,width/2,height/2),
                                      tag_size=0.1) #m
+        
+        pose_array_msg = PoseArray()
+        pose_array_msg.header.stamp = self.get_clock().now().to_msg()
+        pose_array_msg.header.frame_id = "camera_frame"  #unknow
 
-        # 输出检测结果
         if tags:
             for tag in tags:
-                pose = tag.pose_t
-                distance = np.linalg.norm(pose)
-                self.get_logger().info(f"Tag ID {tag.tag_id} is {distance:.2f} meters away,at center {tag.center}")
+                pose_t = tag.pose_t
+                x, y, z = pose_t[0][0], pose_t[1][0], pose_t[2][0]
+
+                pose_R = np.array(tag.pose_R)
+                r11 = pose_R[0, 0]
+                r21 = pose_R[1, 0]
+
+                yaw_rad = np.arctan2(r21, r11)
+
+                pose_msg = Pose()
+                pose_msg.position.x = x - 0.5 * z
+                pose_msg.position.y = -(y - 0.5 * z)
+                pose_msg.position.z = z - 1 #attack distance 1m
+
+                pose_msg.orientation.x = 0.0
+                pose_msg.orientation.y = 0.0
+                pose_msg.orientation.z = np.sin(yaw_rad / 2)
+                pose_msg.orientation.w = np.cos(yaw_rad / 2)
+
+                pose_array_msg.poses.append(pose_msg)
+
+                self.get_logger().info(
+                    f"Tag ID {tag.tag_id}, Position: ({x:.2f}, {y:.2f}, {z:.2f}) m, Yaw: {np.degrees(yaw_rad):.2f}°"
+                )
         else:
             self.get_logger().info("No tags detected.")
-    def destroy_node(self):
-        # 清理 OpenCV 窗口
-        cv2.destroyAllWindows()
-        super().destroy_node()
+
+        self.pub.publish(pose_array_msg)
 
 def main(args=None):
     rclpy.init(args=args)
