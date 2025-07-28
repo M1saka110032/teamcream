@@ -51,3 +51,9 @@ launch:
       exec: "apriltag_output_pub"
       name: "apriltag_output_pub"
       namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "apriltag_flash"
+      name: "apriltag_flash"
+      namespace: ""

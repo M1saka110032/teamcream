@@ -1,12 +1,12 @@
-import rclpy    # the ROS 2 client library for Python
-from rclpy.node import Node    # the ROS 2 Node class
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import BatteryState, Imu
 from std_msgs.msg import Float64
 import numpy as np
-from geometry_msgs.msg import Pose, PoseArray
 
-class ApriltagX(Node):
+class IMUYHold(Node):
     def __init__(self):
-        super().__init__("apriltag_x_output")    # names the node when running
+        super().__init__("imu_y_hold")
 
         self.kp = 50
         self.ki = 0.5
@@ -18,18 +18,19 @@ class ApriltagX(Node):
         self.p_error = 0.0
         self.p_time = self.get_clock().now()
 
+        self.imu_sub = self.create_subscription(
+            Imu,
+            '/imu',  # MAVROS topic
+            self.imu_callback,
+            10
+        )
 
+        self.pub = self.create_publisher(Float64, "/YHold_control_output", 10)
 
-        self.pub = self.create_publisher(Float64, "/ApriltagX_control_output", 10)
-
-        self.goal_sub = self.create_subscription(PoseArray, "/tags", self.x_control, 10)
-
-        self.get_logger().info("initialized ApriltagX node")
+        self.get_logger().info("initialized IMU_YHold_control_output node")
     
-    def x_control(self, msg):
-        x_min = min(pose.position.z for pose in msg.poses) - 0.5 # stope at 0.5m front tags
-
-        self.c_error = x_min
+    def imu_callback(self, msg):
+        self.c_error = msg.orientation.y
         self.c_time = self.get_clock().now()
         self.d_time = (self.c_time-self.p_time).nanoseconds/10**9
 
@@ -55,19 +56,12 @@ class ApriltagX(Node):
         self.p_time = self.c_time
         self.p_error = self.c_error
 
-        self.get_logger().info(f"Tag X Error: {self.c_error:.2f} Tag X Force: {self.u:.2f}")
-
-
-        
-
-
-    
-    
+        self.get_logger().info(f"IMU Y Error: {self.c_error:.2f} IMU Y Force: {self.u:.2f}")
 
 
 def main(args=None):
     rclpy.init(args=args)
-    node = ApriltagX()
+    node = IMUYHold()
 
     try:
         rclpy.spin(node)

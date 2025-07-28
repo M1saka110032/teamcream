@@ -81,7 +81,7 @@ class AprilTagDetection(Node):
                 pose_msg = Pose()
                 pose_msg.position.x = x - 0.5 * z
                 pose_msg.position.y = -(y - 0.5 * z)
-                pose_msg.position.z = z - 0.5 #attack distance 1m
+                pose_msg.position.z = z  #attack distance 1m
 
                 pose_msg.orientation.x = 0.0
                 pose_msg.orientation.y = 0.0
@@ -93,10 +93,12 @@ class AprilTagDetection(Node):
                 self.get_logger().info(
                     f"Tag ID {tag.tag_id}, Position: ({x:.2f}, {y:.2f}, {z:.2f}) m, Yaw: {np.degrees(yaw_rad):.2f}°"
                 )
+                
+            self.pub.publish(pose_array_msg)
         else:
             self.get_logger().info("No tags detected.")
 
-        self.pub.publish(pose_array_msg)
+        
 
         timestamp = self.get_clock().now().to_msg()
         filename = f"tag_{timestamp.sec}.jpg"

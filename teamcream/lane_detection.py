@@ -46,9 +46,22 @@ def get_slopes_intercepts(img,lines):
             y_intercepts.append(y_intercept)
     return slopes, angles, intercepts, y_intercepts
 
+def onlyforward_lines(img,lines):
 
+    if lines is None or len(lines) == 0:
+        return [], [], []
+    slopes, angles, intercepts, y_intercepts = get_slopes_intercepts(img,lines)
+    line_data = [(line, slope, angle, intercept, get_line_length(line)) for line, slope, angle, intercept in zip(lines, slopes, angles, intercepts)]
+    
+    filtered_lines = [data for data in line_data if abs(data[2]) < 45]
 
-def filter_StEdSim_lines(img,lines, distance_threshold =100):
+    selected_lines = [data[0] for data in filtered_lines]
+    selected_slopes = [data[1] for data in filtered_lines]
+    selected_angles = [data[2] for data in filtered_lines]
+
+    return selected_lines, selected_slopes, selected_angles
+
+def filter_StEdSim_lines(img,lines, distance_threshold =50):
 
     if lines is None or len(lines) == 0:
         return [], [], []
@@ -75,14 +88,13 @@ def filter_StEdSim_lines(img,lines, distance_threshold =100):
             x21, y21, x22, y22 = line2[0]
             start_dist = np.sqrt((x11-x21)**2 + (y11-y21)**2)
             end_dist = np.sqrt((x12-x22)**2 + (y12-y22)**2)
-            # check slope and intercept similar
+
             if start_dist < distance_threshold and end_dist < distance_threshold:
                 current_group.append(line_data[j])
                 used[j] = True
         
         groups.append(current_group)
     
-    # 从每组中选择最长的线段
     filtered_lines = []
     filtered_slopes = []
     filtered_angles = []
@@ -99,7 +111,7 @@ def filter_StEdSim_lines(img,lines, distance_threshold =100):
     
     return filtered_lines, filtered_slopes, filtered_angles, filtered_intercepts
 
-def filter_Slo_interc_lines(img, lines, angle_threshold=1, intercept_threshold=200):
+def filter_Slo_interc_lines(img, lines, angle_threshold=1, intercept_threshold=50):
 
     if lines is None or len(lines) == 0:
         return [], [], []
@@ -162,7 +174,8 @@ def detect_lines(img,threshold1=20,threshold2=60,apertureSize=3,minLineLength=50
                 minLineLength=minLineLength,
                 maxLineGap=maxLineGap,
         )
-    
+    lines, selected_slopes, selected_angles = onlyforward_lines(img,lines)
+
     old = len(lines)
     new = 0
     while old != new:
@@ -219,10 +232,10 @@ def detect_lanes(img, lines):
     if lines is None or len(lines) < 2:
         return []
 
-    angle_threshold = 5
+    angle_threshold = 10
     max_position_threshold = 100
     min_position_threshold = 10  # 提高阈值
-    min_intercept_diff = 5  # 新增：最小截距差
+    min_intercept_diff = 10  # 新增：最小截距差
 
     slopes, angles, intercepts, y_intercepts = get_slopes_intercepts(img, lines)
     line_data = [(line, slope, angle, intercept, y_intercepts)
@@ -275,11 +288,12 @@ def detect_lanes(img, lines):
                 continue
             p2_start, p2_end = pts2
 
+            # group 1：p1_start 到 p2_start，p1_end 到 p2_end
             start_dist1 = np.sqrt((p1_start[0] - p2_start[0]) ** 2 + (p1_start[1] - p2_start[1]) ** 2)
             end_dist1 = np.sqrt((p1_end[0] - p2_end[0]) ** 2 + (p1_end[1] - p2_end[1]) ** 2)
             avg_dist1 = (start_dist1 + end_dist1) / 2
 
-            # 组合2：p1_start 到 p2_end，p1_end 到 p2_start
+            # group 2：p1_start 到 p2_end，p1_end 到 p2_start
             start_dist2 = np.sqrt((p1_start[0] - p2_end[0]) ** 2 + (p1_start[1] - p2_end[1]) ** 2)
             end_dist2 = np.sqrt((p1_end[0] - p2_start[0]) ** 2 + (p1_end[1] - p2_start[1]) ** 2)
             avg_dist2 = (start_dist2 + end_dist2) / 2
@@ -296,8 +310,6 @@ def detect_lanes(img, lines):
 
             angle_diff = abs(angle1 - angle2)
             intercept_diff = abs(intercept1 - intercept2)
-
-            print(f"Line pair {i+1},{j+1}: Line1={line1[0]}, Line2={line2[0]}, p1_start={p1_start}, p1_end={p1_end}, p2_start={p2_start}, p2_end={p2_end}, start_dist={selected_start_dist}, end_dist={selected_end_dist}, avg_dist={selected_avg_dist}, angle_diff={angle_diff}, intercept_diff={intercept_diff}")
 
             if selected_avg_dist > max_position_threshold or selected_avg_dist < min_position_threshold:
                 continue

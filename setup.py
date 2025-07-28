@@ -48,6 +48,9 @@ setup(
             "apriltag_y_output = teamcream.apriltag_y_output:main",
             "apriltag_z_output = teamcream.apriltag_z_output:main",
             "apriltag_r_output = teamcream.apriltag_r_output:main",
+            "apriltag_flash = teamcream.apriltag_flash:main",
+            "imu_y_hold = teamcream.imu_y_hold:main",
+            "imu_hold_output = teamcream.imu_hold_output:main",
         ],
     },
     options={

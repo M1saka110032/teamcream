@@ -41,15 +41,22 @@ class ImageDetection(Node):
 
             cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
             self.get_logger().debug(f"Received image with frame_id: {msg.header.frame_id}")
+            frame_id = msg.header.frame_id
+
+            original_path = os.path.join(self.save_dir, f"{frame_id}_original.jpg")
+            edges_path = os.path.join(self.save_dir, f"{frame_id}_edges.jpg")
+            lines_path = os.path.join(self.save_dir, f"{frame_id}_lines.jpg")
+            #lanes_path = os.path.join(self.save_dir, f"lanes_{frame_id}.jpg")
+            cv2.imwrite(original_path, cv_image)
 
             img = cut_top_half(cv_image)
             
 
-            filtered_lines, edges = detect_lines(img, 20, 60, 3,150,25)
-
+            filtered_lines, edges = detect_lines(img, 20, 60, 3,200,25)
+            cv2.imwrite(edges_path, edges)
 
             lines_img = draw_lines(cv_image,filtered_lines)
-
+            cv2.imwrite(lines_path, lines_img)
 
             lanes = detect_lanes(img, filtered_lines)
 
@@ -71,21 +78,7 @@ class ImageDetection(Node):
             self.r_pub.publish(r)
             self.y_pub.publish(y)
 
-            direction = recommend_direction(mid_intercept, mid_slope, mid_angle, img)
-            turn = recommend_turn(mid_intercept, mid_slope, mid_angle, img)
-            self.get_logger().info(f"Recommended direction: {direction}, Turn: {turn}")
-
             img_with_lines = draw_lanes(img, lanes)
-
-            frame_id = msg.header.frame_id
-            original_path = os.path.join(self.save_dir, f"{frame_id}_original.jpg")
-            edges_path = os.path.join(self.save_dir, f"{frame_id}_edges.jpg")
-            lines_path = os.path.join(self.save_dir, f"{frame_id}_lines.jpg")
-            #lanes_path = os.path.join(self.save_dir, f"lanes_{frame_id}.jpg")
-
-            cv2.imwrite(original_path, cv_image)
-            cv2.imwrite(edges_path, edges)
-            cv2.imwrite(lines_path, lines_img)
             #cv2.imwrite(lanes_path, img_with_lines)
 
 
