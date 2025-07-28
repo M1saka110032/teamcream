@@ -1,4 +1,4 @@
-#/home/eugene/cv-intro/lane_detection.py
+#/home/eugene/auvc_ws/src/teamcream/teamcream/lane_detection.py
 
 import matplotlib.pyplot as plt
 import numpy as np

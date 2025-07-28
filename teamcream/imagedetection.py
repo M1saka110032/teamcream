@@ -1,8 +1,9 @@
+#/home/eugene/auvc_ws/src/teamcream/teamcream/imagedetection.py
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
-from lane_detection import cut_top_half, detect_lines, draw_lines, detect_lanes, draw_lanes, get_lane_center, recommend_direction, recommend_turn
+from teamcream.lane_detection import cut_top_half, detect_lines, draw_lines, detect_lanes, draw_lanes, get_lane_center, recommend_direction, recommend_turn
 import numpy as np
 import cv2
 import os
@@ -17,7 +18,7 @@ class ImageDetection(Node):
 
         self.sub = self.create_subscription(
             Image,
-            "bluerov2/camera",
+            "/camera",
             self.getLane,
             10
         )
@@ -33,6 +34,7 @@ class ImageDetection(Node):
 
         self.get_logger().info(f"Initialized subscriber node. Images will be saved to {self.save_dir}")
 
+        
     def getLane(self, msg):
         try:
 
@@ -78,6 +80,9 @@ class ImageDetection(Node):
             cv2.imwrite(original_path, cv_image)
             cv2.imwrite(edges_path, edges)
             cv2.imwrite(lanes_path, img_with_lines)
+
+            cv2.imshow("Lane Detection", img_with_lines)
+            cv2.waitKey(1)
 
         except Exception as e:
             self.get_logger().error(f"Error processing or saving image: {str(e)}")

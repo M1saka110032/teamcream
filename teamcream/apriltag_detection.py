@@ -63,7 +63,7 @@ class AprilTagDetection(Node):
                 pose_msg = Pose()
                 pose_msg.position.x = x - 0.5 * z
                 pose_msg.position.y = -(y - 0.5 * z)
-                pose_msg.position.z = z - 1 #attack distance 1m
+                pose_msg.position.z = z - 0.5 #attack distance 1m
 
                 pose_msg.orientation.x = 0.0
                 pose_msg.orientation.y = 0.0
