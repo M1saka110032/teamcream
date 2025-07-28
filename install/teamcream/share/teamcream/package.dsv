@@ -1,0 +1,6 @@
+source;share/teamcream/hook/pythonpath.ps1
+source;share/teamcream/hook/pythonpath.dsv
+source;share/teamcream/hook/pythonpath.sh
+source;share/teamcream/hook/ament_prefix_path.ps1
+source;share/teamcream/hook/ament_prefix_path.dsv
+source;share/teamcream/hook/ament_prefix_path.sh

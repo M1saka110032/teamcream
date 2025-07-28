@@ -82,6 +82,8 @@ class ImageDetection(Node):
             cv2.imwrite(edges_path, edges)
             cv2.imwrite(lanes_path, img_with_lines)
 
+            cv2.imshow("Lane Detection", img_with_lines)
+            cv2.waitKey(1)
 
         except Exception as e:
             self.get_logger().error(f"Error processing or saving image: {str(e)}")

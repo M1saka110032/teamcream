@@ -1,0 +1,33 @@
+launch:
+  - node:
+      pkg: "rosmav"
+      exec: "bluerov2_hardware_interface"
+      name: "bluerov2_hardware_interface"
+      namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "ArmClient"
+      name: "arm_client"
+      namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "calcdepth"
+      name: "depth_publisher"
+      namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "depthhold"
+      name: "depth_control"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "headingcontrol"
+      name: "heading_control"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "controlMsgPub"
+      name: "control_combiner"
+      namespace: ""

@@ -5,8 +5,7 @@ from cv_bridge import CvBridge
 from geometry_msgs.msg import Pose, PoseArray
 import numpy as np
 from dt_apriltags import Detector
-import os
-import cv2
+
 class AprilTagDetection(Node):
     def __init__(self):
         super().__init__("apriltag_detection")
@@ -15,7 +14,7 @@ class AprilTagDetection(Node):
 
         self.sub = self.create_subscription(
             Image,
-            "/camera",
+            "bluerov2/camera",
             self.DetectAprilTags,
             10
         )
@@ -30,24 +29,18 @@ class AprilTagDetection(Node):
                                  decode_sharpening=0.25,
                                  debug=0)
         
-        self.save_dir = os.path.expanduser("~/auvc_ws/saved_images")
-
-        if not os.path.exists(self.save_dir):
-            os.makedirs(self.save_dir)
-
         self.get_logger().info(f"Initialized subscriber node. Images will be saved to {self.save_dir}")
 
     def DetectAprilTags(self, msg):
         try:
 
             cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            gray_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
         except Exception as e:
             self.get_logger().error(f"Error processing or saving image: {str(e)}")
         
         height, width, channels = cv_image.shape
         
-        tags = self.detector.detect(gray_image,
+        tags = self.detector.detect(cv_image,
                                      estimate_tag_pose=True,
                                      camera_params=(width,height,width/2,height/2),
                                      tag_size=0.1) #m
@@ -58,17 +51,6 @@ class AprilTagDetection(Node):
 
         if tags:
             for tag in tags:
-                for idx in range(len(tag.corners)):
-                    cv2.line(cv_image, tuple(tag.corners[idx - 1, :].astype(int)),
-                             tuple(tag.corners[idx, :].astype(int)), (0, 255, 0))
-
-                cv2.putText(cv_image, str(tag.tag_id),
-                            org=(tag.corners[0, 0].astype(int) + 10, tag.corners[0, 1].astype(int) + 10),
-                            fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                            fontScale=0.8,
-                            color=(0, 0, 255))
-    
-
                 pose_t = tag.pose_t
                 x, y, z = pose_t[0][0], pose_t[1][0], pose_t[2][0]
 
@@ -97,11 +79,6 @@ class AprilTagDetection(Node):
             self.get_logger().info("No tags detected.")
 
         self.pub.publish(pose_array_msg)
-
-        timestamp = self.get_clock().now().to_msg()
-        filename = f"tag_detected_{timestamp.sec}.png"
-        save_path = os.path.join(self.save_dir, filename)
-        cv2.imwrite(save_path, cv_image)
 
 def main(args=None):
     rclpy.init(args=args)

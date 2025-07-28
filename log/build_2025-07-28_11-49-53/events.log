@@ -1,0 +1,196 @@
+[0.000000] (-) TimerEvent: {}
+[0.000953] (teamcream) JobQueued: {'identifier': 'teamcream', 'dependencies': OrderedDict()}
+[0.001742] (teamcream) JobStarted: {'identifier': 'teamcream'}
+[0.099284] (-) TimerEvent: {}
+[0.199957] (-) TimerEvent: {}
+[0.300594] (-) TimerEvent: {}
+[0.401177] (-) TimerEvent: {}
+[0.501825] (-) TimerEvent: {}
+[0.602398] (-) TimerEvent: {}
+[0.703020] (-) TimerEvent: {}
+[0.803596] (-) TimerEvent: {}
+[0.904175] (-) TimerEvent: {}
+[1.004767] (-) TimerEvent: {}
+[1.105299] (-) TimerEvent: {}
+[1.205979] (-) TimerEvent: {}
+[1.306781] (-) TimerEvent: {}
+[1.407426] (-) TimerEvent: {}
+[1.508350] (-) TimerEvent: {}
+[1.608937] (-) TimerEvent: {}
+[1.709540] (-) TimerEvent: {}
+[1.810222] (-) TimerEvent: {}
+[1.910843] (-) TimerEvent: {}
+[2.011409] (-) TimerEvent: {}
+[2.112018] (-) TimerEvent: {}
+[2.212595] (-) TimerEvent: {}
+[2.313161] (-) TimerEvent: {}
+[2.413814] (-) TimerEvent: {}
+[2.514362] (-) TimerEvent: {}
+[2.614957] (-) TimerEvent: {}
+[2.715552] (-) TimerEvent: {}
+[2.816097] (-) TimerEvent: {}
+[2.916652] (-) TimerEvent: {}
+[3.017215] (-) TimerEvent: {}
+[3.117862] (-) TimerEvent: {}
+[3.218459] (-) TimerEvent: {}
+[3.320802] (-) TimerEvent: {}
+[3.421363] (-) TimerEvent: {}
+[3.521936] (-) TimerEvent: {}
+[3.622551] (-) TimerEvent: {}
+[3.723130] (-) TimerEvent: {}
+[3.824154] (-) TimerEvent: {}
+[3.924864] (-) TimerEvent: {}
+[4.025423] (-) TimerEvent: {}
+[4.126019] (-) TimerEvent: {}
+[4.226586] (-) TimerEvent: {}
+[4.327130] (-) TimerEvent: {}
+[4.427773] (-) TimerEvent: {}
+[4.528646] (-) TimerEvent: {}
+[4.577607] (teamcream) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', 'build/teamcream', 'build', '--build-base', '/home/eugene/auvc_ws/src/teamcream/build/teamcream/build', 'install', '--record', '/home/eugene/auvc_ws/src/teamcream/build/teamcream/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/eugene/auvc_ws/src/teamcream', 'env': {'VIRTUALENVWRAPPER_WORKON_CD': '1', 'USER': 'eugene', 'SSH_CLIENT': 'fe80::266b:9b47:57a:8d58%usb0 8501 22', 'WORKON_HOME': '/home/eugene/.virtualenvs', 'GZ_DISCOVERY_SERVER': '192.168.3.1:11345', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/eugene/.vscode-server/cli/servers/Stable-c306e94f98122556ca081f527b466015e1bc37b0/server/extensions/git/dist/askpass.sh', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'BROWSER': '/home/eugene/.vscode-server/cli/servers/Stable-c306e94f98122556ca081f527b466015e1bc37b0/server/bin/helpers/browser.sh', 'HOME': '/home/eugene', 'OLDPWD': '/home/eugene/auvc_ws/src', 'LESS': '-R', 'VIRTUALENVWRAPPER_PYTHON': '/usr/bin/python3', 'TERM_PROGRAM_VERSION': '1.102.2', 'VSCODE_IPC_HOOK_CLI': '/run/user/1004/vscode-ipc-443133a3-bc30-4825-b1bb-af2664f4c463.sock', 'ZSH': '/home/eugene/.oh-my-zsh', 'LSCOLORS': 'Gxfxcxdxbxegedabagacad', 'GZ_TRANSPORT_PUB_PORT': '11345', 'PAGER': 'less', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/eugene/.vscode-server/cli/servers/Stable-c306e94f98122556ca081f527b466015e1bc37b0/server/extensions/git/dist/askpass-main.js', 'PS1': '(bluecv) %(?:%{\x1b[01;32m%}%1{➜%} :%{\x1b[01;31m%}%1{➜%} ) %{\x1b[36m%}%c%{\x1b[00m%} $(git_prompt_info)', 'SSL_CERT_FILE': '/usr/lib/ssl/cert.pem', 'VSCODE_GIT_ASKPASS_NODE': '/home/eugene/.vscode-server/cli/servers/Stable-c306e94f98122556ca081f527b466015e1bc37b0/server/node', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1004/bus', 'GZ_TRANSPORT_SUB_PORT': '11346', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'BUNDLED_DEBUGPY_PATH': '/home/eugene/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/libs/debugpy', 'COLORTERM': 'truecolor', 'ROS_DISTRO': 'jazzy', 'COLCON_PREFIX_PATH': '/home/eugene/auvc_ws/install', 'LOGNAME': 'eugene', '_': '/usr/bin/colcon', 'XDG_SESSION_CLASS': 'user', 'ROS_VERSION': '2', 'GZ_TRANSPORT_IP': '192.168.3.2', 'USER_ZDOTDIR': '/home/eugene', 'XDG_SESSION_ID': '1', 'TERM': 'xterm-256color', 'PATH': '/home/eugene/.virtualenvs/bluecv/bin:/usr/lib/ccache:/usr/lib/ccache:/home/eugene/.vscode-server/cli/servers/Stable-c306e94f98122556ca081f527b466015e1bc37b0/server/bin/remote-cli:/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/eugene/ardupilot/Tools/autotest:/home/eugene/.local/bin:/home/eugene/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/scripts/noConfigScripts:/home/eugene/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand:/home/eugene/ardupilot/Tools/autotest:/home/eugene/.local/bin:/home/eugene/ardupilot/Tools/autotest:/home/eugene/.local/bin', 'XDG_RUNTIME_DIR': '/run/user/1004', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'GZ_PARTITION': 'my_sim', 'LANG': 'en_US.UTF-8', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/eugene/.vscode-server/extensions/ms-python.debugpy-2025.10.0/.noConfigDebugAdapterEndpoints/endpoint-9bca223e1108e472.txt', 'VSCODE_INJECTION': '1', 'VIRTUAL_ENV_PROMPT': 'bluecv', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'TERM_PROGRAM': 'vscode', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1004/vscode-git-98dd2d1832.sock', 'AMENT_PREFIX_PATH': '/home/eugene/auvc_ws/install/tutorial_virtualenvs:/home/eugene/auvc_ws/install/tutorial_ardusub:/home/eugene/auvc_ws/install/tutorial:/home/eugene/auvc_ws/install/teamcream:/home/eugene/auvc_ws/install/rosmav:/opt/ros/jazzy', 'SHELL': '/usr/bin/zsh', 'VIRTUALENVWRAPPER_PROJECT_FILENAME': '.project', 'IGN_GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'VIRTUALENVWRAPPER_HOOK_DIR': '/home/eugene/.virtualenvs', 'VIRTUALENVWRAPPER_SCRIPT': 'virtualenvwrapper.sh', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'VIRTUAL_ENV': '/home/eugene/.virtualenvs/bluecv', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/eugene/auvc_ws/src/teamcream/build/teamcream', 'SSH_CONNECTION': 'fe80::266b:9b47:57a:8d58%usb0 8501 fe80::10e8:5eff:fe9b:62e5%usb0 22', 'ZDOTDIR': '/home/eugene', 'PYTHONPATH': '/home/eugene/auvc_ws/src/teamcream/build/teamcream/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages:/home/eugene/auvc_ws/install/tutorial_virtualenvs/lib/python3.12/site-packages:/home/eugene/auvc_ws/install/tutorial_ardusub/lib/python3.12/site-packages:/home/eugene/auvc_ws/install/tutorial/lib/python3.12/site-packages:/home/eugene/auvc_ws/install/teamcream/lib/python3.12/site-packages:/home/eugene/auvc_ws/install/rosmav/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[4.628820] (-) TimerEvent: {}
+[4.729399] (-) TimerEvent: {}
+[4.830014] (-) TimerEvent: {}
+[4.930666] (-) TimerEvent: {}
+[5.031572] (-) TimerEvent: {}
+[5.132118] (-) TimerEvent: {}
+[5.232711] (-) TimerEvent: {}
+[5.333241] (-) TimerEvent: {}
+[5.433852] (-) TimerEvent: {}
+[5.534370] (-) TimerEvent: {}
+[5.634952] (-) TimerEvent: {}
+[5.735519] (-) TimerEvent: {}
+[5.836075] (-) TimerEvent: {}
+[5.936601] (-) TimerEvent: {}
+[6.034621] (teamcream) StdoutLine: {'line': b'running egg_info\n'}
+[6.035858] (teamcream) StdoutLine: {'line': b'creating build/teamcream/teamcream.egg-info\n'}
+[6.036742] (-) TimerEvent: {}
+[6.137253] (-) TimerEvent: {}
+[6.237835] (-) TimerEvent: {}
+[6.338350] (-) TimerEvent: {}
+[6.438914] (-) TimerEvent: {}
+[6.539442] (-) TimerEvent: {}
+[6.628154] (teamcream) StdoutLine: {'line': b'writing build/teamcream/teamcream.egg-info/PKG-INFO\n'}
+[6.630022] (teamcream) StdoutLine: {'line': b'writing dependency_links to build/teamcream/teamcream.egg-info/dependency_links.txt\n'}
+[6.631632] (teamcream) StdoutLine: {'line': b'writing entry points to build/teamcream/teamcream.egg-info/entry_points.txt\n'}
+[6.632339] (teamcream) StdoutLine: {'line': b'writing requirements to build/teamcream/teamcream.egg-info/requires.txt\n'}
+[6.632997] (teamcream) StdoutLine: {'line': b'writing top-level names to build/teamcream/teamcream.egg-info/top_level.txt\n'}
+[6.633568] (teamcream) StdoutLine: {'line': b"writing manifest file 'build/teamcream/teamcream.egg-info/SOURCES.txt'\n"}
+[6.639626] (-) TimerEvent: {}
+[6.745687] (-) TimerEvent: {}
+[6.847462] (-) TimerEvent: {}
+[6.920874] (teamcream) StdoutLine: {'line': b"reading manifest file 'build/teamcream/teamcream.egg-info/SOURCES.txt'\n"}
+[6.924669] (teamcream) StdoutLine: {'line': b"writing manifest file 'build/teamcream/teamcream.egg-info/SOURCES.txt'\n"}
+[6.925340] (teamcream) StdoutLine: {'line': b'running build\n'}
+[6.925866] (teamcream) StdoutLine: {'line': b'running build_py\n'}
+[6.927035] (teamcream) StdoutLine: {'line': b'creating /home/eugene/auvc_ws/src/teamcream/build/teamcream/build\n'}
+[6.927728] (teamcream) StdoutLine: {'line': b'creating /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib\n'}
+[6.928346] (teamcream) StdoutLine: {'line': b'creating /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.928978] (teamcream) StdoutLine: {'line': b'copying teamcream/imagedetection.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.929550] (teamcream) StdoutLine: {'line': b'copying teamcream/depthhold.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.930298] (teamcream) StdoutLine: {'line': b'copying teamcream/headingcontrol.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.931176] (teamcream) StdoutLine: {'line': b'copying teamcream/apriltag_z_output.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.932051] (teamcream) StdoutLine: {'line': b'copying teamcream/apriltag_r_output.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.932902] (teamcream) StdoutLine: {'line': b'copying teamcream/LaneFollowingY.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.934172] (teamcream) StdoutLine: {'line': b'copying teamcream/LaneFollowingR.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.935333] (teamcream) StdoutLine: {'line': b'copying teamcream/apriltag_detection.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.936516] (teamcream) StdoutLine: {'line': b'copying teamcream/controlMsgPub.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.937523] (teamcream) StdoutLine: {'line': b'copying teamcream/calcdepth.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.938394] (teamcream) StdoutLine: {'line': b'copying teamcream/apriltag_x_output.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.939379] (teamcream) StdoutLine: {'line': b'copying teamcream/apriltag_output_pub.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.940308] (teamcream) StdoutLine: {'line': b'copying teamcream/bluerov2_sensors.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.941186] (teamcream) StdoutLine: {'line': b'copying teamcream/forward_move.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.942100] (teamcream) StdoutLine: {'line': b'copying teamcream/LaneFollowingOutput.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.942978] (teamcream) StdoutLine: {'line': b'copying teamcream/Dance.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.944217] (teamcream) StdoutLine: {'line': b'copying teamcream/apriltag_y_output.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.945315] (teamcream) StdoutLine: {'line': b'copying teamcream/lane_detection.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.946398] (teamcream) StdoutLine: {'line': b'copying teamcream/ArmClient.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.947630] (-) TimerEvent: {}
+[6.948361] (teamcream) StdoutLine: {'line': b'copying teamcream/__init__.py -> /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream\n'}
+[6.950844] (teamcream) StdoutLine: {'line': b'running install\n'}
+[6.977269] (teamcream) StdoutLine: {'line': b'running install_lib\n'}
+[7.047775] (-) TimerEvent: {}
+[7.095910] (teamcream) StdoutLine: {'line': b'creating /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.096589] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/imagedetection.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.097403] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/depthhold.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.098274] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/headingcontrol.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.099112] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/apriltag_z_output.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.099928] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/apriltag_r_output.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.100749] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/LaneFollowingY.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.101581] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/LaneFollowingR.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.102405] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/apriltag_detection.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.103277] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/controlMsgPub.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.104107] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/calcdepth.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.104943] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/apriltag_x_output.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.105783] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/apriltag_output_pub.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.106607] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/bluerov2_sensors.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.107413] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/forward_move.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.108269] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/LaneFollowingOutput.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.109080] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/Dance.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.110031] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/apriltag_y_output.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.111099] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/lane_detection.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.112152] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/ArmClient.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.113161] (teamcream) StdoutLine: {'line': b'copying /home/eugene/auvc_ws/src/teamcream/build/teamcream/build/lib/teamcream/__init__.py -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream\n'}
+[7.116618] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/imagedetection.py to imagedetection.cpython-312.pyc\n'}
+[7.122625] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/depthhold.py to depthhold.cpython-312.pyc\n'}
+[7.126906] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/headingcontrol.py to headingcontrol.cpython-312.pyc\n'}
+[7.134930] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/apriltag_z_output.py to apriltag_z_output.cpython-312.pyc\n'}
+[7.136138] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/apriltag_r_output.py to apriltag_r_output.cpython-312.pyc\n'}
+[7.140232] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/LaneFollowingY.py to LaneFollowingY.cpython-312.pyc\n'}
+[7.144170] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/LaneFollowingR.py to LaneFollowingR.cpython-312.pyc\n'}
+[7.148923] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/apriltag_detection.py to apriltag_detection.cpython-312.pyc\n'}
+[7.149912] (-) TimerEvent: {}
+[7.158156] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/controlMsgPub.py to controlMsgPub.cpython-312.pyc\n'}
+[7.164989] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/calcdepth.py to calcdepth.cpython-312.pyc\n'}
+[7.170698] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/apriltag_x_output.py to apriltag_x_output.cpython-312.pyc\n'}
+[7.173630] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/apriltag_output_pub.py to apriltag_output_pub.cpython-312.pyc\n'}
+[7.178631] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/bluerov2_sensors.py to bluerov2_sensors.cpython-312.pyc\n'}
+[7.186473] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/forward_move.py to forward_move.cpython-312.pyc\n'}
+[7.189719] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/LaneFollowingOutput.py to LaneFollowingOutput.cpython-312.pyc\n'}
+[7.194342] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/Dance.py to Dance.cpython-312.pyc\n'}
+[7.209018] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/apriltag_y_output.py to apriltag_y_output.cpython-312.pyc\n'}
+[7.213015] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/lane_detection.py to lane_detection.cpython-312.pyc\n'}
+[7.232240] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/ArmClient.py to ArmClient.cpython-312.pyc\n'}
+[7.235824] (teamcream) StdoutLine: {'line': b'byte-compiling /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream/__init__.py to __init__.cpython-312.pyc\n'}
+[7.237145] (teamcream) StdoutLine: {'line': b'running install_data\n'}
+[7.237991] (teamcream) StdoutLine: {'line': b'creating /home/eugene/auvc_ws/src/teamcream/install/teamcream/share/ament_index\n'}
+[7.238727] (teamcream) StdoutLine: {'line': b'creating /home/eugene/auvc_ws/src/teamcream/install/teamcream/share/ament_index/resource_index\n'}
+[7.239814] (teamcream) StdoutLine: {'line': b'creating /home/eugene/auvc_ws/src/teamcream/install/teamcream/share/ament_index/resource_index/packages\n'}
+[7.240351] (teamcream) StdoutLine: {'line': b'copying resource/teamcream -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/share/ament_index/resource_index/packages\n'}
+[7.241182] (teamcream) StdoutLine: {'line': b'copying package.xml -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/share/teamcream\n'}
+[7.241963] (teamcream) StdoutLine: {'line': b'creating /home/eugene/auvc_ws/src/teamcream/install/teamcream/share/teamcream/launch\n'}
+[7.242823] (teamcream) StdoutLine: {'line': b'copying launch/depthheadinghold.launch.yaml -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/share/teamcream/launch\n'}
+[7.244528] (teamcream) StdoutLine: {'line': b'copying launch/lanefollow.launch.yaml -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/share/teamcream/launch\n'}
+[7.245598] (teamcream) StdoutLine: {'line': b'copying launch/apriltag_follow.launch.yaml -> /home/eugene/auvc_ws/src/teamcream/install/teamcream/share/teamcream/launch\n'}
+[7.246746] (teamcream) StdoutLine: {'line': b'running install_egg_info\n'}
+[7.250068] (-) TimerEvent: {}
+[7.350601] (-) TimerEvent: {}
+[7.377702] (teamcream) StdoutLine: {'line': b'Copying build/teamcream/teamcream.egg-info to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/python3.12/site-packages/teamcream-0.0.0-py3.12.egg-info\n'}
+[7.382941] (teamcream) StdoutLine: {'line': b'running install_scripts\n'}
+[7.450759] (-) TimerEvent: {}
+[7.551289] (-) TimerEvent: {}
+[7.651930] (-) TimerEvent: {}
+[7.698750] (teamcream) StdoutLine: {'line': b'Installing ArmClient script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.700001] (teamcream) StdoutLine: {'line': b'Installing Dance script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.702431] (teamcream) StdoutLine: {'line': b'Installing LaneFollowingOutput script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.703131] (teamcream) StdoutLine: {'line': b'Installing LaneFollowingR script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.705421] (teamcream) StdoutLine: {'line': b'Installing LaneFollowingY script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.707515] (teamcream) StdoutLine: {'line': b'Installing apriltag_detection script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.708133] (teamcream) StdoutLine: {'line': b'Installing apriltag_output_pub script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.710517] (teamcream) StdoutLine: {'line': b'Installing apriltag_r_output script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.711146] (teamcream) StdoutLine: {'line': b'Installing apriltag_x_output script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.714352] (teamcream) StdoutLine: {'line': b'Installing apriltag_y_output script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.717171] (teamcream) StdoutLine: {'line': b'Installing apriltag_z_output script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.719801] (teamcream) StdoutLine: {'line': b'Installing bluerov2_sensors script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.720414] (teamcream) StdoutLine: {'line': b'Installing calcdepth script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.721094] (teamcream) StdoutLine: {'line': b'Installing controlMsgPub script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.722121] (teamcream) StdoutLine: {'line': b'Installing depthhold script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.724684] (teamcream) StdoutLine: {'line': b'Installing forward_move script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.726647] (teamcream) StdoutLine: {'line': b'Installing headingcontrol script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.728188] (teamcream) StdoutLine: {'line': b'Installing imagedetection script to /home/eugene/auvc_ws/src/teamcream/install/teamcream/lib/teamcream\n'}
+[7.729739] (teamcream) StdoutLine: {'line': b"writing list of installed files to '/home/eugene/auvc_ws/src/teamcream/build/teamcream/install.log'\n"}
+[7.752762] (-) TimerEvent: {}
+[7.856584] (-) TimerEvent: {}
+[7.928260] (teamcream) CommandEnded: {'returncode': 0}
+[7.957033] (-) TimerEvent: {}
+[8.004854] (teamcream) JobEnded: {'identifier': 'teamcream', 'rc': 0}
+[8.007671] (-) EventReactorShutdown: {}
