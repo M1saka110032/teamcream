@@ -30,34 +30,42 @@ class IMUYHold(Node):
         self.get_logger().info("initialized IMU_YHold_control_output node")
     
     def imu_callback(self, msg):
-        self.c_error = msg.orientation.y
+        # 获取线性加速度 y 值
+        accel_y = msg.linear_acceleration.y
+
+        # 当前时间
         self.c_time = self.get_clock().now()
-        self.d_time = (self.c_time-self.p_time).nanoseconds/10**9
+        self.d_time = (self.c_time - self.p_time).nanoseconds / 1e9
 
-        self.u_p = self.c_error * self.kp
+        if self.d_time <= 0.0:
+            return
 
-        self.i += self.d_time * self.c_error
+        if not hasattr(self, 'vel_y'):
+            self.vel_y = 0.0
+        self.vel_y += accel_y * self.d_time
+
+        error = -self.vel_y 
+
+        self.u_p = error * self.kp
+        self.i += error * self.d_time
         self.u_i = self.ki * self.i
-
-        if self.d_time > 0:
-            derivative = (self.c_error - self.p_error) / self.d_time
-        else:
-            derivative = 0.0
+        derivative = (error - self.p_error) / self.d_time
         self.u_d = self.kd * derivative
 
-        self.u = (self.u_p + self.u_i + self.u_d)
-
+        # 总输出
+        self.u = self.u_p + self.u_i + self.u_d
         self.u = np.clip(self.u, -60, 60)
 
+        # 发布控制信号
         m = Float64()
         m.data = self.u
         self.pub.publish(m)
 
+        # 记录历史
         self.p_time = self.c_time
-        self.p_error = self.c_error
+        self.p_error = error
 
-        self.get_logger().info(f"IMU Y Error: {self.c_error:.2f} IMU Y Force: {self.u:.2f}")
-
+        self.get_logger().info(f"Accel Y: {accel_y:.3f} | Vel Y: {self.vel_y:.3f} | Force: {self.u:.2f}")
 
 def main(args=None):
     rclpy.init(args=args)
