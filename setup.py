@@ -14,13 +14,18 @@ setup(
     version='0.0.0',
     packages=find_packages(exclude=['test']),
     data_files=[
-        ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
+        ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/launch', ['launch/depthheadinghold.launch.yaml']),
-        ('share/' + package_name + '/launch', ['launch/lanefollow.launch.yaml']),
-        ('share/' + package_name + '/launch', ['launch/apriltag_follow.launch.yaml']),
-        ('share/' + package_name + '/launch', ['launch/imuhold.launch.yaml']),
+        (
+            'share/' + package_name + '/launch',
+            [
+                'launch/depthheadinghold.launch.yaml',
+                'launch/lanefollow.launch.yaml',
+                'launch/apriltag_follow.launch.yaml',
+                'launch/imuhold.launch.yaml',
+                'launch/strategy1.launch.yaml',
+            ],
+        ),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -52,6 +57,7 @@ setup(
             "apriltag_flash = teamcream.apriltag_flash:main",
             "imu_y_hold = teamcream.imu_y_hold:main",
             "imu_hold_output = teamcream.imu_hold_output:main",
+            "strategy1 = teamcream.strategy1:main",
         ],
     },
     options={

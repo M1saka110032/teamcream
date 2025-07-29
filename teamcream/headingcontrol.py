@@ -6,13 +6,13 @@ import numpy as np
 class headingcontrol(Node):
     def __init__(self):
         super().__init__("heading_control")    # names the node when running
+        self.goal = 90
+        
         self.kp = 0.5
         self.ki = 0.01
         self.kd = 0.1
 
         self.i = 0.0
-        self.goal = 10
-
         self.p_error = 0
         self.p_time = self.get_clock().now()
 
@@ -39,6 +39,7 @@ class headingcontrol(Node):
         self.get_logger().info(f"Updated goal heading to: {self.goal} degrees")
     
     def heading_control(self, msg):
+
         self.heading = msg.data
         c_error = self.goal - self.heading
         c_error = (c_error + 180) % 360 - 180

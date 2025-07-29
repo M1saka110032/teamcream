@@ -61,7 +61,7 @@ def onlyforward_lines(img,lines):
 
     return selected_lines, selected_slopes, selected_angles
 
-def filter_StEdSim_lines(img,lines, distance_threshold =50):
+def filter_StEdSim_lines(img,lines, distance_threshold =5):
 
     if lines is None or len(lines) == 0:
         return [], [], []
@@ -111,7 +111,7 @@ def filter_StEdSim_lines(img,lines, distance_threshold =50):
     
     return filtered_lines, filtered_slopes, filtered_angles, filtered_intercepts
 
-def filter_Slo_interc_lines(img, lines, angle_threshold=1, intercept_threshold=50):
+def filter_Slo_interc_lines(img, lines, angle_threshold=1, intercept_threshold=5):
 
     if lines is None or len(lines) == 0:
         return [], [], []
@@ -233,9 +233,9 @@ def detect_lanes(img, lines):
         return []
 
     angle_threshold = 10
-    max_position_threshold = 100
-    min_position_threshold = 10  # 提高阈值
-    min_intercept_diff = 10  # 新增：最小截距差
+    max_position_threshold = 50
+    min_position_threshold = 5  # 提高阈值
+    min_intercept_diff = 5  # 新增：最小截距差
 
     slopes, angles, intercepts, y_intercepts = get_slopes_intercepts(img, lines)
     line_data = [(line, slope, angle, intercept, y_intercepts)

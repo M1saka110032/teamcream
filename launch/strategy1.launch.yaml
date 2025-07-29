@@ -1,4 +1,3 @@
-#/home/eugene/auvc_ws/src/teamcream/launch/apriltag_follow.launch.yaml
 launch:
   - node:
       pkg: "rosmav"
@@ -16,6 +15,34 @@ launch:
       pkg: "teamcream"
       exec: "ArmClient"
       name: "arm_client"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "calcdepth"
+      name: "depth_publisher"
+      namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "depthhold"
+      name: "depth_control"
+      namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "imagedection"
+      name: "image_detection"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "LaneFollowingR"
+      name: "lane_following_r"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "LaneFollowingY"
+      name: "lane_following_y"
       namespace: ""
   - node:
       pkg: "teamcream"
@@ -45,15 +72,14 @@ launch:
       exec: "apriltag_r_output"
       name: "apriltag_r_output"
       namespace: ""
-
-  - node:
-      pkg: "teamcream"
-      exec: "apriltag_output_pub"
-      name: "apriltag_output_pub"
-      namespace: ""
-
   - node:
       pkg: "teamcream"
       exec: "apriltag_flash"
       name: "apriltag_flash"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "strategy1"
+      name: "strategy1"
       namespace: ""
