@@ -20,6 +20,7 @@ setup(
         ('share/' + package_name + '/launch', ['launch/depthheadinghold.launch.yaml']),
         ('share/' + package_name + '/launch', ['launch/lanefollow.launch.yaml']),
         ('share/' + package_name + '/launch', ['launch/apriltag_follow.launch.yaml']),
+        ('share/' + package_name + '/launch', ['launch/imuhold.launch.yaml']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

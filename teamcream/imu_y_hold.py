@@ -52,16 +52,13 @@ class IMUYHold(Node):
         derivative = (error - self.p_error) / self.d_time
         self.u_d = self.kd * derivative
 
-        # 总输出
         self.u = self.u_p + self.u_i + self.u_d
         self.u = np.clip(self.u, -60, 60)
 
-        # 发布控制信号
         m = Float64()
         m.data = self.u
         self.pub.publish(m)
-
-        # 记录历史
+    
         self.p_time = self.c_time
         self.p_error = error
 

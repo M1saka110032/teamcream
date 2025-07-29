@@ -27,10 +27,12 @@ class ApriltagR(Node):
 
 
     def r_control(self, msg):
-        yaw_sum = 0.0
+        yaw_mean = 0.0
         if msg.poses:
-            yaw_sum = sum(2 * np.arctan2(pose.orientation.z, pose.orientation.w) for pose in msg.poses)
-        c_error = yaw_sum
+            yaw_mean = np.mean(2 * np.arctan2(pose.orientation.z, pose.orientation.w) for pose in msg.poses)
+        else:
+            yaw_mean = 0
+        c_error = yaw_mean
 
         self.c_time = self.get_clock().now()
         self.d_time = (self.c_time-self.p_time).nanoseconds/10**9

@@ -50,14 +50,16 @@ class AprilTagDetection(Node):
         tags = self.detector.detect(gray_image,
                                      estimate_tag_pose=True,
                                      camera_params=(width,height,width/2,height/2),
-                                     tag_size=0.1) #m
+                                     tag_size=0.07366) #m
         
         pose_array_msg = PoseArray()
         pose_array_msg.header.stamp = self.get_clock().now().to_msg()
         pose_array_msg.header.frame_id = "camera_frame"  #unknow
 
+        tolerence = 0
         if tags:
             for tag in tags:
+                """
                 for idx in range(len(tag.corners)):
                     cv2.line(cv_image, tuple(tag.corners[idx - 1, :].astype(int)),
                              tuple(tag.corners[idx, :].astype(int)), (0, 255, 0))
@@ -67,7 +69,7 @@ class AprilTagDetection(Node):
                             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                             fontScale=0.8,
                             color=(0, 0, 255))
-    
+                """
 
                 pose_t = tag.pose_t
                 x, y, z = pose_t[0][0], pose_t[1][0], pose_t[2][0]
@@ -95,7 +97,22 @@ class AprilTagDetection(Node):
                 )
                 
             self.pub.publish(pose_array_msg)
+            tolerence = 0
         else:
+            tolerene += 1
+            if tolerence > 3:
+
+                zero_pose = Pose()
+                zero_pose.position.x = 0.0
+                zero_pose.position.y = 0.0
+                zero_pose.position.z = 0.0
+                zero_pose.orientation.x = 0.0
+                zero_pose.orientation.y = 0.0
+                zero_pose.orientation.z = 0.0
+                zero_pose.orientation.w = 1.0
+
+                pose_array_msg.poses.append(zero_pose)
+                self.pub.publish(pose_array_msg)
             self.get_logger().info("No tags detected.")
 
         
