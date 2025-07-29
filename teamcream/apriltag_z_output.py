@@ -29,33 +29,47 @@ class ApriltagZ(Node):
     def z_control(self, msg):
         z_mean = np.mean(pose.position.y for pose in msg.poses)
 
-        self.c_error = z_mean
         self.c_time = self.get_clock().now()
-        self.d_time = (self.c_time-self.p_time).nanoseconds/10**9
+        self.d_time = (self.c_time - self.p_time).nanoseconds / 1e9  # seconds
 
-        self.u_p = self.c_error * self.kp
+        if msg.poses:
+            # --- Compute yaw error from all detected poses ---
+            z_mean = np.mean(pose.position.y for pose in msg.poses)
+            c_error = z_mean
 
-        self.i += self.d_time * self.c_error
-        self.u_i = self.ki * self.i
+            # --- PID Control ---
+            u_p = self.kp * c_error
 
-        if self.d_time > 0:
-            derivative = (self.c_error - self.p_error) / self.d_time
+            self.i += c_error * self.d_time  # Integral accumulation
+            u_i = self.ki * self.i
+
+            derivative = (c_error - self.p_error) / self.d_time if self.d_time > 0 else 0.0
+            u_d = self.kd * derivative
+
+            u = u_p + u_i + u_d
+            u = np.clip(u, -60, 60)
+
+            # --- Publish control signal ---
+            m = Float64()
+            m.data = u
+            self.pub.publish(m)
+
+            # --- Logging and updates ---
+            self.get_logger().info(f"Tag R Error: {c_error:.3f} | R Force: {u:.3f}")
+
+            self.p_error = c_error
+            self.p_time = self.c_time
+
         else:
-            derivative = 0.0
-        self.u_d = self.kd * derivative
+            # --- No tags detected: reset integral and error, stop motor ---
+            self.i = 0.0
+            self.p_error = 0.0
 
-        self.u = (self.u_p + self.u_i + self.u_d)
+            m = Float64()
+            m.data = 0.0
+            self.pub.publish(m)
 
-        self.u = np.clip(self.u, -60, 60)
-
-        m = Float64()
-        m.data = self.u
-        self.pub.publish(m)
-
-        self.p_time = self.c_time
-        self.p_error = self.c_error
-
-        self.get_logger().info(f"Tag Z Error: {self.c_error:.2f} Tag Z Force: {self.u:.2f}")
+            self.get_logger().info("No tag detected — stopping control.")
 
 
         

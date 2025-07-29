@@ -27,39 +27,48 @@ class ApriltagR(Node):
 
 
     def r_control(self, msg):
-        yaw_mean = 0.0
-        if msg.poses:
-            yaw_mean = np.mean(2 * np.arctan2(pose.orientation.z, pose.orientation.w) for pose in msg.poses)
-        else:
-            yaw_mean = 0
-        c_error = yaw_mean
 
         self.c_time = self.get_clock().now()
-        self.d_time = (self.c_time-self.p_time).nanoseconds/10**9
+        self.d_time = (self.c_time - self.p_time).nanoseconds / 1e9  # seconds
 
-        u_p = c_error * self.kp
+        if msg.poses:
+            # --- Compute yaw error from all detected poses ---
+            yaw_mean = np.mean(2 * np.arctan2(pose.orientation.z, pose.orientation.w) for pose in msg.poses)
+            c_error = yaw_mean
 
-        self.i += self.d_time * c_error
-        u_i = self.ki * self.i
+            # --- PID Control ---
+            u_p = self.kp * c_error
 
-        if self.d_time > 0:
-            derivative = (c_error - self.p_error) / self.d_time
+            self.i += c_error * self.d_time  # Integral accumulation
+            u_i = self.ki * self.i
+
+            derivative = (c_error - self.p_error) / self.d_time if self.d_time > 0 else 0.0
+            u_d = self.kd * derivative
+
+            u = u_p + u_i + u_d
+            u = np.clip(u, -60, 60)
+
+            # --- Publish control signal ---
+            m = Float64()
+            m.data = u
+            self.pub.publish(m)
+
+            # --- Logging and updates ---
+            self.get_logger().info(f"Tag R Error: {c_error:.3f} | R Force: {u:.3f}")
+
+            self.p_error = c_error
+            self.p_time = self.c_time
+
         else:
-            derivative = 0.0
-        u_d = self.kd * derivative
+            # --- No tags detected: reset integral and error, stop motor ---
+            self.i = 0.0
+            self.p_error = 0.0
 
-        u = u_p + u_i + u_d
+            m = Float64()
+            m.data = 0.0
+            self.pub.publish(m)
 
-        u = np.clip(u, -60, 60)
-        
-        m = Float64()
-        m.data = u
-        self.pub.publish(m)
-
-        self.p_time = self.c_time
-        self.p_error = c_error
-
-        self.get_logger().info(f"Tag R Error: {c_error} Tag R Force: {u}")
+            self.get_logger().info("No tag detected — stopping control.")
 
 def main(args=None):
     rclpy.init(args=args)
