@@ -32,14 +32,12 @@ class ApriltagX(Node):
         self.d_time = (self.c_time - self.p_time).nanoseconds / 1e9  # seconds
 
         if msg.poses:
-            # --- Compute yaw error from all detected poses ---
             x_mean = np.mean(pose.position.z for pose in msg.poses) - 0.5
             c_error = x_mean
 
-            # --- PID Control ---
             u_p = self.kp * c_error
 
-            self.i += c_error * self.d_time  # Integral accumulation
+            self.i += c_error * self.d_time
             u_i = self.ki * self.i
 
             derivative = (c_error - self.p_error) / self.d_time if self.d_time > 0 else 0.0
@@ -48,19 +46,16 @@ class ApriltagX(Node):
             u = u_p + u_i + u_d
             u = np.clip(u, -60, 60)
 
-            # --- Publish control signal ---
             m = Float64()
             m.data = u
             self.pub.publish(m)
-
-            # --- Logging and updates ---
             self.get_logger().info(f"Tag R Error: {c_error:.3f} | R Force: {u:.3f}")
 
             self.p_error = c_error
             self.p_time = self.c_time
 
         else:
-            # --- No tags detected: reset integral and error, stop motor ---
+
             self.i = 0.0
             self.p_error = 0.0
 
