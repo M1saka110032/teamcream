@@ -3,7 +3,6 @@ from setuptools import find_packages, setup
 
 package_name = 'teamcream'
 
-# 指定你的虚拟环境路径
 virtualenv_name = "bluecv"
 home_path = os.path.expanduser("~")
 executable_path = os.path.join(home_path, '.virtualenvs', virtualenv_name, 'bin', 'python')

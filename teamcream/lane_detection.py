@@ -174,6 +174,7 @@ def detect_lines(img,threshold1=20,threshold2=60,apertureSize=3,minLineLength=50
                 minLineLength=minLineLength,
                 maxLineGap=maxLineGap,
         )
+    """
     lines, selected_slopes, selected_angles = onlyforward_lines(img,lines)
 
     old = len(lines)
@@ -184,11 +185,12 @@ def detect_lines(img,threshold1=20,threshold2=60,apertureSize=3,minLineLength=50
         lines, slopes, angles, intercepts= filter_StEdSim_lines(img,lines)
         lines, slopes, angles, intercepts= filter_Slo_interc_lines(img,lines)
         new = len(lines)
-    filtered_lines, filtered_slopes, filtered_angles, filtered_intercepts = lines, slopes, angles, intercepts
-    
-    #for i in range(len(filtered_lines)):
-    #    print(f"line:{filtered_lines[i]} slope:{filtered_slopes[i]:.4f} angle:{filtered_angles[i]:.4f} intercept:{filtered_intercepts[i]:.0f}")
-    
+            """
+    lines1, slopes, angles, intercepts = get_slopes_intercepts(img,lines)
+    print(len(lines))
+    for i in range(len(lines)):
+        print(f"line:{lines[i]} slope:{slopes[i]:.4f} angle:{angles[i]:.4f} intercept:{intercepts[i]:.0f}")
+
     return lines , edges
 
 
@@ -233,7 +235,7 @@ def detect_lanes(img, lines):
         return []
 
     angle_threshold = 10
-    max_position_threshold = 50
+    max_position_threshold = 200
     min_position_threshold = 5  # 提高阈值
     min_intercept_diff = 5  # 新增：最小截距差
 
@@ -366,7 +368,7 @@ def get_lane_center(lanes,img):
     height, width, channels = img.shape
     image_width = width
     if not lanes or len(lanes) == 0:
-        return None, None
+        return None, None,None
 
     min_avg_intercept = float('inf')
     cloest_intercept = None

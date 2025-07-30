@@ -54,7 +54,7 @@ class ApriltagOutput(Node):
         msg.r = float(self.heading_control)
         msg.buttons = 0
         self.pub.publish(msg)
-
+        self.get_logger().info(f"x:{msg.x:.3f} y:{msg.y:.3f} z:{msg.z:.3f} r:{msg.r:.3f}")
 def main(args=None):
     rclpy.init(args=args)
     node = ApriltagOutput()

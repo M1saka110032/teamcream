@@ -6,7 +6,7 @@ import numpy as np
 class headingcontrol(Node):
     def __init__(self):
         super().__init__("heading_control")    # names the node when running
-        self.goal = 90
+        self.goal = 50
         
         self.kp = 0.5
         self.ki = 0.01

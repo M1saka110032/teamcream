@@ -43,25 +43,29 @@ class ImageDetection(Node):
             self.get_logger().debug(f"Received image with frame_id: {msg.header.frame_id}")
             frame_id = msg.header.frame_id
 
-            original_path = os.path.join(self.save_dir, f"{frame_id}_original.jpg")
-            edges_path = os.path.join(self.save_dir, f"{frame_id}_edges.jpg")
+            #original_path = os.path.join(self.save_dir, f"{frame_id}_original.jpg")
+            #edges_path = os.path.join(self.save_dir, f"{frame_id}_edges.jpg")
             lines_path = os.path.join(self.save_dir, f"{frame_id}_lines.jpg")
             #lanes_path = os.path.join(self.save_dir, f"lanes_{frame_id}.jpg")
-            cv2.imwrite(original_path, cv_image)
+            #cv2.imwrite(original_path, cv_image)
 
             img = cut_top_half(cv_image)
             
 
-            filtered_lines, edges = detect_lines(img, 20, 60, 3,200,25)
-            cv2.imwrite(edges_path, edges)
+            lines, edges= detect_lines(img,20,60,3,150,25)
+            #cv2.imwrite(edges_path, edges)
 
-            lines_img = draw_lines(cv_image,filtered_lines)
-            cv2.imwrite(lines_path, lines_img)
+            img_lines = draw_lines(img,lines)
+            cv2.imwrite(lines_path, img_lines)
 
-            lanes = detect_lanes(img, filtered_lines)
+            lanes = detect_lanes(img,lines)
 
             mid_intercept, mid_slope, mid_angle = get_lane_center(lanes, img)
             height, width, channels = img.shape
+
+            if mid_intercept is None or mid_slope is None or mid_angle is None:
+                self.get_logger().warn("No valid lane center detected.")
+                return
 
             if mid_slope >= 0:
                 mid_angle = -mid_angle
@@ -78,7 +82,7 @@ class ImageDetection(Node):
             self.r_pub.publish(r)
             self.y_pub.publish(y)
 
-            img_with_lines = draw_lanes(img, lanes)
+            #img_lane = draw_lanes(img,lanes)
             #cv2.imwrite(lanes_path, img_with_lines)
 
 

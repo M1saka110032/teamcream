@@ -8,7 +8,7 @@ class Strategy1Pub(Node):
         super().__init__("strategy1")
         self.max_power = 70
         
-        self.x_output = 40
+        self.x_output = 50
         self.y_output = 0.0
         self.depth_control = 0.0
         self.heading_control = 0.0

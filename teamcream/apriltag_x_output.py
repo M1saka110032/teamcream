@@ -64,6 +64,7 @@ class ApriltagX(Node):
             self.pub.publish(m)
 
             self.get_logger().info("No tag detected — stopping control.")
+        
 
 
         

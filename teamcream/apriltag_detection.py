@@ -32,6 +32,8 @@ class AprilTagDetection(Node):
         
         self.save_dir = os.path.expanduser("~/auvc_ws/saved_images")
 
+        self.tolerance = 0
+
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
 
@@ -39,24 +41,29 @@ class AprilTagDetection(Node):
 
     def DetectAprilTags(self, msg):
         try:
-
             cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
             gray_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
         except Exception as e:
             self.get_logger().error(f"Error processing or saving image: {str(e)}")
+            return
         
         height, width, channels = cv_image.shape
         
+        fx = 273.25
+        fy = 261.76
+        cx = 307.89
+        cy = 153.84
+
         tags = self.detector.detect(gray_image,
-                                     estimate_tag_pose=True,
-                                     camera_params=(width,height,width/2,height/2),
-                                     tag_size=0.07366) #m
+                                    estimate_tag_pose=True,
+                                    camera_params=(fx, fy, cx, cy),
+                                    tag_size=0.07366)  # meters
         
         pose_array_msg = PoseArray()
         pose_array_msg.header.stamp = self.get_clock().now().to_msg()
         pose_array_msg.header.frame_id = "camera_frame"  #unknow
 
-        tolerence = 0
+        
         if tags:
             for tag in tags:
                 """
@@ -97,10 +104,10 @@ class AprilTagDetection(Node):
                 )
                 
             self.pub.publish(pose_array_msg)
-            tolerence = 0
+            self.tolerance = 0
         else:
-            tolerene += 1
-            if tolerence > 3:
+            self.tolerance += 1
+            if self.tolerance > 10:
 
                 zero_pose = Pose()
                 zero_pose.position.x = 0.0
@@ -118,10 +125,12 @@ class AprilTagDetection(Node):
         
 
         timestamp = self.get_clock().now().to_msg()
-        filename = f"tag_{timestamp.sec}.jpg"
+        """
+        filename = f"{timestamp.sec}_tag.jpg"
         save_path = os.path.join(self.save_dir, filename)
         cv2.imwrite(save_path, cv_image)
-
+        """
+        
 def main(args=None):
     rclpy.init(args=args)
     node = AprilTagDetection()
@@ -132,6 +141,91 @@ def main(args=None):
     finally:
         node.destroy_node()
         if rclpy.ok():
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             rclpy.shutdown()
 
 if __name__ == '__main__':
