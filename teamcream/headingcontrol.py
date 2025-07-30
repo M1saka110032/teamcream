@@ -2,7 +2,8 @@ import rclpy    # the ROS 2 client library for Python
 from rclpy.node import Node    # the ROS 2 Node class
 from std_msgs.msg import Int16 , Float64    # the Int16 message type definition
 import numpy as np
-
+from geometry_msgs.msg import Pose, PoseArray
+import time
 class headingcontrol(Node):
     def __init__(self):
         super().__init__("heading_control")    # names the node when running
@@ -16,6 +17,8 @@ class headingcontrol(Node):
         self.p_error = 0
         self.p_time = self.get_clock().now()
 
+        self.last_trigger_time = 0.0
+        
         self.sub = self.create_subscription(
             Int16,        # the message type
             "/heading",    # the topic name,
@@ -26,6 +29,9 @@ class headingcontrol(Node):
         self.goal_sub = self.create_subscription(
             Int16, "/set_heading_goal", self.set_goal_callback, 10)
 
+        self.goal_sub = self.create_subscription(
+            PoseArray, "/wall_tags", self.walltag_callback, 10)
+        
         self.pub = self.create_publisher(Float64, "/heading_control_output", 10)
 
         self.get_logger().info("initialized HeadingControl node")
@@ -38,6 +44,24 @@ class headingcontrol(Node):
         self.goal = new_goal
         self.get_logger().info(f"Updated goal heading to: {self.goal} degrees")
     
+    def walltag_callback(self, msg):
+        current_time = time.time()
+        if current_time - self.last_trigger_time < 3.0:
+            self.get_logger().info("walltag_callback skipped due to 3-second cooldown")
+            return
+        
+        if msg.poses:
+            distance = min(pose.position.z for pose in msg.poses)
+            if 0 < distance < 1:
+                self.goal = (self.goal + 180) % 360
+                self.last_trigger_time = current_time
+                self.get_logger().info(f"walltag_callback triggered: goal updated to {self.goal}°")
+            else:
+                self.get_logger().info(f"Distance {distance:.2f} m not in range (0, 1)")
+        else:
+            self.get_logger().info("No poses in wall_tags message")
+                
+
     def heading_control(self, msg):
 
         self.heading = msg.data

@@ -21,6 +21,7 @@ class AprilTagDetection(Node):
         )
 
         self.pub = self.create_publisher(PoseArray, "/tags", 10)
+        self.wall_pub = self.create_publisher(PoseArray, "/wall_tags", 10)
 
         self.detector = Detector(families='tag36h11',
                                  nthreads=1,
@@ -32,12 +33,14 @@ class AprilTagDetection(Node):
         
         self.save_dir = os.path.expanduser("~/auvc_ws/saved_images")
 
+        self.specific_tag_ids = {10, 12, 13}
+
         self.tolerance = 0
 
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
 
-        self.get_logger().info(f"Initialized subscriber node. Images will be saved to {self.save_dir}")
+        self.get_logger().info(f"Initialized apriltag detection node. Images will be saved to {self.save_dir}")
 
     def DetectAprilTags(self, msg):
         try:
@@ -57,12 +60,18 @@ class AprilTagDetection(Node):
         tags = self.detector.detect(gray_image,
                                     estimate_tag_pose=True,
                                     camera_params=(fx, fy, cx, cy),
-                                    tag_size=0.07366)  # meters
+                                    tag_size=0.05)  # meters
         
         pose_array_msg = PoseArray()
         pose_array_msg.header.stamp = self.get_clock().now().to_msg()
         pose_array_msg.header.frame_id = "camera_frame"  #unknow
 
+        wall_pose_array_msg = PoseArray()
+        wall_pose_array_msg.header.stamp = self.get_clock().now().to_msg()
+        wall_pose_array_msg.header.frame_id = "camera_frame"
+        
+        non_specific_tags_detected = False
+        all_tags_are_specific = True
         
         if tags:
             for tag in tags:
@@ -97,17 +106,43 @@ class AprilTagDetection(Node):
                 pose_msg.orientation.z = np.sin(yaw_rad / 2)
                 pose_msg.orientation.w = np.cos(yaw_rad / 2)
 
-                pose_array_msg.poses.append(pose_msg)
+                if tag.tag_id in self.specific_tag_ids:
+                    wall_pose_array_msg.poses.append(pose_msg)
+                else:
+                    pose_array_msg.poses.append(pose_msg)
+                    non_specific_tags_detected = True
+                    all_tags_are_specific = False
 
                 self.get_logger().info(
                     f"Tag ID {tag.tag_id}, Position: ({x:.2f}, {y:.2f}, {z:.2f}) m, Yaw: {np.degrees(yaw_rad):.2f}°"
                 )
                 
-            self.pub.publish(pose_array_msg)
-            self.tolerance = 0
+            if non_specific_tags_detected:
+                self.pub.publish(pose_array_msg)
+            if all_tags_are_specific and wall_pose_array_msg.poses:
+                self.wall_pub.publish(wall_pose_array_msg)
+            
+            if non_specific_tags_detected:
+                self.tolerance = 0
+            else:
+                self.tolerance += 1
+                if self.tolerance > 5:
+
+                    zero_pose = Pose()
+                    zero_pose.position.x = 0.0
+                    zero_pose.position.y = 0.0
+                    zero_pose.position.z = 0.0
+                    zero_pose.orientation.x = 0.0
+                    zero_pose.orientation.y = 0.0
+                    zero_pose.orientation.z = 0.0
+                    zero_pose.orientation.w = 1.0
+
+                    pose_array_msg.poses.append(zero_pose)
+                self.pub.publish(pose_array_msg)
+
         else:
             self.tolerance += 1
-            if self.tolerance > 10:
+            if self.tolerance > 5:
 
                 zero_pose = Pose()
                 zero_pose.position.x = 0.0
@@ -125,12 +160,12 @@ class AprilTagDetection(Node):
         
 
         timestamp = self.get_clock().now().to_msg()
-        """
+        
         filename = f"{timestamp.sec}_tag.jpg"
         save_path = os.path.join(self.save_dir, filename)
         cv2.imwrite(save_path, cv_image)
-        """
         
+
 def main(args=None):
     rclpy.init(args=args)
     node = AprilTagDetection()
@@ -141,91 +176,6 @@ def main(args=None):
     finally:
         node.destroy_node()
         if rclpy.ok():
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             rclpy.shutdown()
 
 if __name__ == '__main__':

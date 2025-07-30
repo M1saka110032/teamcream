@@ -32,7 +32,7 @@ class ApriltagFlash(Node):
 
     def tagdistance(self, msg):
         distance = min(pose.position.z for pose in msg.poses)
-        if distance < 1:
+        if distance < 1 and distance != 0:
             self.turn_lights_on(100)
         else:
             self.turn_lights_on(0)

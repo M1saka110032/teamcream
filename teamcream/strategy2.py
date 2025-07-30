@@ -8,7 +8,7 @@ class Strategy1Pub(Node):
         super().__init__("strategy1")
         self.max_power = 70
         
-        self.x_output = 50
+        self.x_output = 40
         self.y_output = 0.0
         self.depth_control = 0.0
         self.heading_control = 0.0
@@ -40,6 +40,15 @@ class Strategy1Pub(Node):
             Float64, "/ApriltagX_control_output", self.apriltag_x_callback, 10)
         self.apriltag_y_sub = self.create_subscription(
             Float64, "/ApriltagY_control_output", self.apriltag_y_callback, 10)
+        
+        # State machine setup
+        self.state = "DESCEND"
+        self.target_depth = 1.5
+        self.rov_tag_id = 42  # replace with real ROV tag ID
+        self.wall_tag_id = 99  # replace with real wall tag ID
+        self.last_rov_seen_time = self.get_clock().now()
+        self.rov_timeout = 5.0  # seconds
+
 
         # 定时器，10Hz
         self.timer = self.create_timer(0.1, self.publish_manual_control)
@@ -103,7 +112,7 @@ class Strategy1Pub(Node):
             abs(self.apriltag_r) > 0.0
         )
         lane_active = abs(self.lane_y) > 0.0 or abs(self.lane_r) > 0.0
-
+        
         # x_output逻辑：ApriltagX非0时使用，否则默认40
         self.x_output = self.apriltag_x if abs(self.apriltag_x) > 0.0 else 40.0
         x_source = "ApriltagX" if abs(self.apriltag_x) > 0.0 else "default"
@@ -131,16 +140,13 @@ class Strategy1Pub(Node):
         if apriltag_active:
             self.heading_control = self.apriltag_r
             r_source = "ApriltagR"
+        elif lane_active:
+            self.heading_control = self.lane_r
+            r_source = "laneR"
         else:
             self.heading_control = self.heading
             r_source = "heading_control_output"
 
-        """
-        elif lane_active:
-            self.heading_control = self.lane_r
-            r_source = "laneR"
-            """
-        
         # 发布消息
         msg.x = float(self.x_output)
         msg.y = float(self.y_output)
@@ -152,6 +158,92 @@ class Strategy1Pub(Node):
             f"Published ManualControl: x={msg.x:.2f}, y={msg.y:.2f}, z={msg.z:.2f}, r={msg.r:.2f}, "
             f"sources: x={x_source}, y={y_source}, z={z_source}, r={r_source}"
         )
+
+    def publish_manual_control(self):
+        msg = ManualControl()
+        now = self.get_clock().now()
+
+        # Simulate tag detection
+        current_tag_id = None  # <-- You'll need to get this from a proper AprilTag message
+        rov_detected = False   # <-- Replace with actual check
+        wall_detected = False  # <-- Replace with actual check
+
+        # Check for AprilTag "activity"
+        apriltag_active = (
+            abs(self.apriltag_x) > 0.0 or
+            abs(self.apriltag_y) > 0.0 or
+            abs(self.apriltag_z) > 0.0 or
+            abs(self.apriltag_r) > 0.0
+        )
+
+        if rov_detected:
+            self.last_rov_seen_time = now
+
+        # STATE LOGIC
+        if self.state == "DESCEND":
+            self.x_output = 0.0
+            self.y_output = 0.0
+            self.depth_control = 40.0 if self.depth < self.target_depth else 0.0
+            self.heading_control = 0.0
+
+            if self.depth >= self.target_depth:
+                self.get_logger().info("Reached depth. Switching to FIND_LANE.")
+                self.state = "FIND_LANE"
+
+        elif self.state == "FIND_LANE":
+            self.x_output = 0.0
+            self.y_output = 0.0
+            self.depth_control = self.depth
+            self.heading_control = 20.0  # rotate slowly to find a lane
+
+            if abs(self.lane_y) > 0.0:
+                self.get_logger().info("Lane detected. Switching to FOLLOW_LANE.")
+                self.state = "FOLLOW_LANE"
+
+        elif self.state == "FOLLOW_LANE":
+            self.x_output = 40.0
+            self.y_output = self.lane_y
+            self.depth_control = self.depth
+            self.heading_control = self.lane_r
+
+            if rov_detected:
+                self.get_logger().info("ROV detected! Switching to CHASE_ROV.")
+                self.state = "CHASE_ROV"
+            elif wall_detected:
+                self.get_logger().info("Wall detected. Turning around.")
+                self.state = "TURN_AROUND"
+
+        elif self.state == "TURN_AROUND":
+            self.x_output = 0.0
+            self.y_output = 0.0
+            self.depth_control = self.depth
+            self.heading_control = 50.0  # turn right
+
+            if abs(self.lane_y) > 0.0:
+                self.get_logger().info("Lane reacquired. Switching to FOLLOW_LANE.")
+                self.state = "FOLLOW_LANE"
+
+        elif self.state == "CHASE_ROV":
+            self.x_output = self.apriltag_x if abs(self.apriltag_x) > 0.0 else 40.0
+            self.y_output = self.apriltag_y
+            self.depth_control = self.apriltag_z
+            self.heading_control = self.apriltag_r
+
+            time_since_seen = (now - self.last_rov_seen_time).nanoseconds * 1e-9
+            if time_since_seen > self.rov_timeout:
+                self.get_logger().info("Lost ROV. Resuming FIND_LANE.")
+                self.state = "FIND_LANE"
+
+        # Limit and publish
+        msg.x = float(np.clip(self.x_output, -self.max_power, self.max_power))
+        msg.y = float(np.clip(self.y_output, -self.max_power, self.max_power))
+        msg.z = float(np.clip(self.depth_control, -self.max_power, self.max_power))
+        msg.r = float(np.clip(self.heading_control, -self.max_power, self.max_power))
+        msg.buttons = 0
+        self.pub.publish(msg)
+
+        self.get_logger().info(f"[{self.state}] Published: x={msg.x:.1f}, y={msg.y:.1f}, z={msg.z:.1f}, r={msg.r:.1f}")
+
 
 def main(args=None):
     rclpy.init(args=args)
