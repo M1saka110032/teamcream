@@ -27,14 +27,13 @@ class ApriltagZ(Node):
         self.get_logger().info("initialized ApriltagZ node")
     
     def z_control(self, msg):
-        z_mean = np.mean([pose.position.y for pose in msg.poses])
 
         self.c_time = self.get_clock().now()
         self.d_time = (self.c_time - self.p_time).nanoseconds / 1e9  # seconds
 
         if msg.poses:
 
-            z_mean = np.mean(pose.position.y for pose in msg.poses)
+            z_mean = np.mean([pose.position.y for pose in msg.poses])
             c_error = z_mean
 
             u_p = self.kp * c_error
@@ -68,7 +67,7 @@ class ApriltagZ(Node):
             self.pub.publish(m)
 
             self.get_logger().info("No tag detected — stopping control.")
-
+        self.p_time = self.c_time
 
         
 

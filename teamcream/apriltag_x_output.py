@@ -37,12 +37,15 @@ class ApriltagX(Node):
 
             u_p = self.kp * c_error
 
+            u_i = 0
+            u_d = 0
+            """
             self.i += c_error * self.d_time
             u_i = self.ki * self.i
 
             derivative = (c_error - self.p_error) / self.d_time if self.d_time > 0 else 0.0
             u_d = self.kd * derivative
-
+            """
             u = u_p + u_i + u_d
             u = np.clip(u, -60, 60)
 
@@ -58,13 +61,15 @@ class ApriltagX(Node):
 
             self.i = 0.0
             self.p_error = 0.0
+            
 
             m = Float64()
             m.data = 0.0
             self.pub.publish(m)
 
             self.get_logger().info("No tag detected — stopping control.")
-        
+        self.p_time = self.c_time
+
 
 
         

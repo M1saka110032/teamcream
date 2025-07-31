@@ -128,33 +128,19 @@ class AprilTagDetection(Node):
                 self.tolerance += 1
                 if self.tolerance > 5:
 
-                    zero_pose = Pose()
-                    zero_pose.position.x = 0.0
-                    zero_pose.position.y = 0.0
-                    zero_pose.position.z = 0.0
-                    zero_pose.orientation.x = 0.0
-                    zero_pose.orientation.y = 0.0
-                    zero_pose.orientation.z = 0.0
-                    zero_pose.orientation.w = 1.0
+                    empty_array = PoseArray()
+                    empty_array.header.stamp = self.get_clock().now().to_msg()
+                    empty_array.header.frame_id = "camera_frame"
+                    self.pub.publish(empty_array)
 
-                    pose_array_msg.poses.append(zero_pose)
-                self.pub.publish(pose_array_msg)
-
-        else:
+        else:   
             self.tolerance += 1
             if self.tolerance > 5:
 
-                zero_pose = Pose()
-                zero_pose.position.x = 0.0
-                zero_pose.position.y = 0.0
-                zero_pose.position.z = 0.0
-                zero_pose.orientation.x = 0.0
-                zero_pose.orientation.y = 0.0
-                zero_pose.orientation.z = 0.0
-                zero_pose.orientation.w = 1.0
-
-                pose_array_msg.poses.append(zero_pose)
-                self.pub.publish(pose_array_msg)
+                empty_array = PoseArray()
+                empty_array.header.stamp = self.get_clock().now().to_msg()
+                empty_array.header.frame_id = "camera_frame"
+                self.pub.publish(empty_array)
             self.get_logger().info("No tags detected.")
 
         

@@ -65,6 +65,7 @@ class ApriltagR(Node):
             self.pub.publish(m)
 
             self.get_logger().info("No tag detected — stopping control.")
+        self.p_time = self.c_time
 
 def main(args=None):
     rclpy.init(args=args)
