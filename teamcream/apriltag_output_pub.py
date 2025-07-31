@@ -23,28 +23,24 @@ class ApriltagOutput(Node):
 
         self.y_sub = self.create_subscription(Float64, "/ApriltagY_control_output", self.set_y_output_callback, 10)
 
-        self.timer = self.create_timer(0.1, self.publish_manual_control)  # 10Hz
+        self.timer = self.create_timer(0.2, self.publish_manual_control)  # 5Hz
 
 
         self.get_logger().info("Initialized ApriltagOutput node")
 
     def depth_callback(self, msg):
         self.depth_control = msg.data
-        self.get_logger().info(f"Received Tag Z control: z={self.depth_control:.2f}")
 
     def heading_callback(self, msg):
         self.heading_control = msg.data
-        self.get_logger().info(f"Received Tag R control: r={self.heading_control:.2f}")
     
     def set_x_output_callback(self, msg):
         new_x_output = msg.data
         self.x_output = new_x_output
-        self.get_logger().info(f"Received Tag X control: {self.x_output:.2f} ")
 
     def set_y_output_callback(self, msg):
         new_y_output = msg.data
         self.y_output = new_y_output
-        self.get_logger().info(f"Received Tag Y control: {self.y_output:.2f} ")
 
     def publish_manual_control(self):
         msg = ManualControl()

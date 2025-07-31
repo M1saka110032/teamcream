@@ -27,11 +27,11 @@ launch:
       exec: "depthhold"
       name: "depth_control"
       namespace: ""
- # - node:
- #     pkg: "teamcream"
-  #    exec: "imagedetection"
- #     name: "image_detection"
- #     namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "imagedetection"
+      name: "image_detection"
+      namespace: ""
 
   - node:
       pkg: "teamcream"
@@ -84,8 +84,8 @@ launch:
       name: "strategy1"
       namespace: ""
 
- # - node:
- #     pkg: "teamcream"
- #     exec: "headingcontrol"
- #     name: "heading_control"
- #     namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "headingcontrol"
+      name: "heading_control"
+      namespace: ""

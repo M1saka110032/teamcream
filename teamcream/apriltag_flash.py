@@ -4,7 +4,7 @@ from std_msgs.msg import Int16 , Float64    # the Int16 message type definition
 import numpy as np
 from geometry_msgs.msg import Pose, PoseArray
 from mavros_msgs.msg import OverrideRCIn
-
+import time
 class ApriltagFlash(Node):
     def __init__(self):
         super().__init__("apriltag_flash")    # names the node when running
@@ -14,8 +14,12 @@ class ApriltagFlash(Node):
         
         self.command_pub = self.create_publisher(OverrideRCIn, "override_rc", 10)
 
+        self.timer = self.create_timer(0.1, self.light)
         self.get_logger().info(f"Initialized ApriltagFlash node.")
 
+        self.distance = 0
+        self.light_on_time = None
+        self.light_should_be_on = False
 
     def turn_lights_on(self, level):
         """
@@ -30,10 +34,26 @@ class ApriltagFlash(Node):
         commands.channels[9] = 1000 + level * 10
         self.command_pub.publish(commands)
 
+        
     def tagdistance(self, msg):
-        distance = np.mean([pose.position.z for pose in msg.poses])
-        if distance < 1 and distance != 0:
+        if msg.poses:
+            self.distance = np.mean([pose.position.z for pose in msg.poses])
+        else:
+            self.distance = 0
+        
+    def light(self):
+        now = time.time()
+
+        if self.distance < 1 and self.distance != 0:
+            self.light_on_time = now
+            self.light_should_be_on = True
             self.turn_lights_on(100)
+        elif self.light_should_be_on:
+            if now - self.light_on_time <= 1.0:
+                self.turn_lights_on(100)
+            else:
+                self.turn_lights_on(0)
+                self.light_should_be_on = False
         else:
             self.turn_lights_on(0)
 

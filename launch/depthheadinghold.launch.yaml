@@ -4,11 +4,11 @@ launch:
       exec: "bluerov2_hardware_interface"
       name: "bluerov2_hardware_interface"
       namespace: ""
-  - node:
-      pkg: "teamcream"
-      exec: "ArmClient"
-      name: "arm_client"
-      namespace: ""
+  #- node:
+   #   pkg: "teamcream"
+   #   exec: "ArmClient"
+   #   name: "arm_client"
+   #   namespace: ""
   - node:
       pkg: "teamcream"
       exec: "calcdepth"
