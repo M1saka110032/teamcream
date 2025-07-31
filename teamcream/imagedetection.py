@@ -52,7 +52,7 @@ class ImageDetection(Node):
             img = cut_top_half(cv_image)
             
 
-            lines, edges= detect_lines(img,20,60,3,150,25)
+            lines, edges= detect_lines(img,20,60,3,70,25)
             #cv2.imwrite(edges_path, edges)
 
             img_lines = draw_lines(img,lines)

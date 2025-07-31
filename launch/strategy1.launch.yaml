@@ -11,11 +11,11 @@ launch:
       name: "bluerov2_camera_interface"
       namespace: ""
 
-  #- node:
-      #pkg: "teamcream"
-      #exec: "ArmClient"
-      #name: "arm_client"
-      #namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "ArmClient"
+      name: "arm_client"
+      namespace: ""
 
   - node:
       pkg: "teamcream"
@@ -82,4 +82,10 @@ launch:
       pkg: "teamcream"
       exec: "strategy1"
       name: "strategy1"
+      namespace: ""
+
+  - node:
+      pkg: "teamcream"
+      exec: "headingcontrol"
+      name: "heading_control"
       namespace: ""

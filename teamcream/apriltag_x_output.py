@@ -32,7 +32,7 @@ class ApriltagX(Node):
         self.d_time = (self.c_time - self.p_time).nanoseconds / 1e9  # seconds
 
         if msg.poses:
-            x_mean = np.mean(pose.position.z for pose in msg.poses) - 0.5
+            x_mean = np.mean([pose.position.z for pose in msg.poses]) - 0.5
             c_error = x_mean
 
             u_p = self.kp * c_error

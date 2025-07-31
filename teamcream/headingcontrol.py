@@ -7,9 +7,9 @@ import time
 class headingcontrol(Node):
     def __init__(self):
         super().__init__("heading_control")    # names the node when running
-        self.goal = 50
+        self.goal = 230
         
-        self.kp = 0.5
+        self.kp = 1
         self.ki = 0.01
         self.kd = 0.1
 
@@ -84,7 +84,7 @@ class headingcontrol(Node):
 
         u = u_p + u_i + u_d
 
-        u = np.clip(u, -60, 60)
+        u = np.clip(u, -70, 70)
         
         m = Float64()
         m.data = u

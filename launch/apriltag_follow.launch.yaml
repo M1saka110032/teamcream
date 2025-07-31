@@ -1,10 +1,10 @@
 #/home/eugene/auvc_ws/src/teamcream/launch/apriltag_follow.launch.yaml
 launch:
-  #- node:
-      #pkg: "rosmav"
-      #exec: "bluerov2_hardware_interface"
-      #name: "bluerov2_hardware_interface"
-      #namespace: ""
+  - node:
+      pkg: "rosmav"
+      exec: "bluerov2_hardware_interface"
+      name: "bluerov2_hardware_interface"
+      namespace: ""
 
   - node:
       pkg: "rosmav"
@@ -12,11 +12,11 @@ launch:
       name: "bluerov2_camera_interface"
       namespace: ""
 
-  #- node:
-      #pkg: "teamcream"
-      #exec: "ArmClient"
-      #name: "arm_client"
-      #namespace: ""
+  - node:
+      pkg: "teamcream"
+      exec: "ArmClient"
+      name: "arm_client"
+      namespace: ""
   - node:
       pkg: "teamcream"
       exec: "apriltag_detection"

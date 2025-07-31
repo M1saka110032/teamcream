@@ -32,7 +32,7 @@ class ApriltagY(Node):
 
         if msg.poses:
 
-            y_mean = np.mean(pose.position.x for pose in msg.poses)
+            y_mean = np.mean([pose.position.x for pose in msg.poses])
             c_error = y_mean
 
 

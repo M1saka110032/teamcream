@@ -60,7 +60,7 @@ class AprilTagDetection(Node):
         tags = self.detector.detect(gray_image,
                                     estimate_tag_pose=True,
                                     camera_params=(fx, fy, cx, cy),
-                                    tag_size=0.05)  # meters
+                                    tag_size=0.07366)  # meters
         
         pose_array_msg = PoseArray()
         pose_array_msg.header.stamp = self.get_clock().now().to_msg()

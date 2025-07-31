@@ -31,7 +31,7 @@ class ApriltagFlash(Node):
         self.command_pub.publish(commands)
 
     def tagdistance(self, msg):
-        distance = min(pose.position.z for pose in msg.poses)
+        distance = np.mean([pose.position.z for pose in msg.poses])
         if distance < 1 and distance != 0:
             self.turn_lights_on(100)
         else:

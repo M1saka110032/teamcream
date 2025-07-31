@@ -32,7 +32,7 @@ class ApriltagR(Node):
         self.d_time = (self.c_time - self.p_time).nanoseconds / 1e9  # seconds
 
         if msg.poses:
-            yaw_mean = np.mean(2 * np.arctan2(pose.orientation.z, pose.orientation.w) for pose in msg.poses)
+            yaw_mean = np.mean([2 * np.arctan2(pose.orientation.z, pose.orientation.w) for pose in msg.poses])
             c_error = yaw_mean
 
             u_p = self.kp * c_error
