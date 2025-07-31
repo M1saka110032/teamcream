@@ -174,6 +174,9 @@ def detect_lines(img,threshold1=20,threshold2=60,apertureSize=3,minLineLength=50
                 minLineLength=minLineLength,
                 maxLineGap=maxLineGap,
         )
+    if lines is None:
+        print("No lines detected by HoughLinesP.")
+        return [], edges
     """
     lines, selected_slopes, selected_angles = onlyforward_lines(img,lines)
 

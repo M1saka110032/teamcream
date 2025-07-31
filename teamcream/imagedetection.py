@@ -45,21 +45,27 @@ class ImageDetection(Node):
 
             #original_path = os.path.join(self.save_dir, f"{frame_id}_original.jpg")
             #edges_path = os.path.join(self.save_dir, f"{frame_id}_edges.jpg")
-            lines_path = os.path.join(self.save_dir, f"{frame_id}_lines.jpg")
-            #lanes_path = os.path.join(self.save_dir, f"lanes_{frame_id}.jpg")
+            #lines_path = os.path.join(self.save_dir, f"{frame_id}_lines.jpg")
+            lanes_path = os.path.join(self.save_dir, f"lanes_{frame_id}.jpg")
             #cv2.imwrite(original_path, cv_image)
 
             img = cut_top_half(cv_image)
             
 
             lines, edges= detect_lines(img,20,60,3,70,25)
+            if lines is None or len(lines) == 0:  # 修复：明确检查 None 和长度
+                self.get_logger().warn("No lines detected in the image.")
+                return
             #cv2.imwrite(edges_path, edges)
 
             img_lines = draw_lines(img,lines)
-            cv2.imwrite(lines_path, img_lines)
+            #cv2.imwrite(lines_path, img_lines)
 
             lanes = detect_lanes(img,lines)
-
+            if not lanes:  # 这里 lanes 是列表，检查没问题
+                self.get_logger().warn("No lanes detected.")
+                return
+            
             mid_intercept, mid_slope, mid_angle = get_lane_center(lanes, img)
             height, width, channels = img.shape
 
@@ -82,8 +88,8 @@ class ImageDetection(Node):
             self.r_pub.publish(r)
             self.y_pub.publish(y)
 
-            #img_lane = draw_lanes(img,lanes)
-            #cv2.imwrite(lanes_path, img_with_lines)
+            img_lane = draw_lanes(img,lanes)
+            cv2.imwrite(lanes_path, img_lane)
 
 
         except Exception as e:
@@ -91,7 +97,6 @@ class ImageDetection(Node):
 
     def destroy_node(self):
         # 清理 OpenCV 窗口
-        cv2.destroyAllWindows()
         super().destroy_node()
 
 def main(args=None):

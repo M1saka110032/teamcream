@@ -52,7 +52,7 @@ class ApriltagX(Node):
             m = Float64()
             m.data = u
             self.pub.publish(m)
-            self.get_logger().info(f"Tag R Error: {c_error:.3f} | R Force: {u:.3f}")
+            self.get_logger().info(f"Tag X Error: {c_error:.3f} | X Force: {u:.3f}")
 
             self.p_error = c_error
             self.p_time = self.c_time
