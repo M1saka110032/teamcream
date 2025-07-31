@@ -9,7 +9,7 @@ class headingcontrol(Node):
         super().__init__("heading_control")    # names the node when running
         self.goal = 230
         
-        self.kp = 1
+        self.kp = 0.5
         self.ki = 0.01
         self.kd = 0.1
 
