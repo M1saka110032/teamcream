@@ -51,7 +51,7 @@ class headingcontrol(Node):
             return
         
         if msg.poses:
-            distance = min(pose.position.z for pose in msg.poses)
+            distance = np.mean([pose.position.z for pose in msg.poses])
             if 0 < distance < 1:
                 self.goal = (self.goal + 180) % 360
                 self.last_trigger_time = current_time
