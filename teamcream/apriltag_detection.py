@@ -97,8 +97,13 @@ class AprilTagDetection(Node):
                 yaw_rad = np.arctan2(r21, r11)
 
                 pose_msg = Pose()
+                """
                 pose_msg.position.x = x - 0.5 * z
                 pose_msg.position.y = -(y - 0.5 * z)
+                pose_msg.position.z = z  #attack distance 1m
+                """
+                pose_msg.position.x = x
+                pose_msg.position.y = -y
                 pose_msg.position.z = z  #attack distance 1m
 
                 pose_msg.orientation.x = 0.0
